@@ -17,12 +17,15 @@ export default {}
   align-items: baseline;
 
   &__letter {
+    $letter-size: 30px;
+
     border-radius: 100px;
-    width: 30px;
-    height: 30px;
+    width: $letter-size;
+    height: $letter-size;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 20px;
+    line-height: $letter-size; 
     color: #fff;
 
     & + & {
