@@ -23,25 +23,14 @@ export default {}
     width: $letter-size;
     height: $letter-size;
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 20px;
     line-height: $letter-size; 
     color: #fff;
+    background-color: #963D5A; // #4ECDC4, #FF6B6B
 
     & + & {
-      margin-left: -9px;
-    }
-
-    &:first-child {
-      background-color: #4183D7;
-    }
-
-    &:nth-child(2) {
-      background-color: #F64747;
-    }
-
-    &:last-child {
-      background-color: #3FC380;
+      margin-left: -6px;
     }
   }
 }
