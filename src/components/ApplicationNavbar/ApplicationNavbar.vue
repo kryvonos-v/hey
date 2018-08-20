@@ -2,7 +2,7 @@
   <nav class="navbar is-dark is-transparent app-navbar container">
     <div class="navbar-brand app-navbar__brand">
       <menu-burger
-        class="app-navbar__burger"
+        class="app-navbar__burger is-hidden-desktop"
         :opened="showMobileMenu"
         @click="toggleMobileMenu"
       />
@@ -10,6 +10,8 @@
       <a class="navbar-item" href="https://bulma.io">
         <application-logo />
       </a>
+
+      <search-toggler v-model="searchActive" class="navbar-item is-hidden-desktop app-navbar__search-box" />
     </div>
 
     <div
@@ -25,12 +27,7 @@
         <a class="navbar-item" href="https://bulma.io/">Movies</a>
       </div>
       <div class="navbar-end">
-        <a class="navbar-item is-hidden-touch">
-          <transition mode="out-in" name="fade">
-            <search-icon v-if="!searchActive" width="20" @click.native="searchActive = true" />
-            <cross-icon v-else width="20" @click.native="searchActive = false" />
-          </transition>
-        </a>
+        <search-toggler v-model="searchActive" class="navbar-item is-hidden-touch" />
         <!-- <a class="navbar-item" href="https://bulma.io/">Login</a> -->
         <!-- <a class="navbar-item" href="https://bulma.io/">Sign up</a> -->
         <div class="navbar-item is-hoverable is-hidden">
@@ -53,18 +50,32 @@ import ApplicationLogo from '@/base-components/ApplicationLogo.vue'
 import CrossIcon from '@/base-components/icons/CrossIcon.vue'
 import SearchIcon from '@/base-components/icons/SearchIcon.vue'
 import MenuBurger from './components/MenuBurger.vue'
+import SearchToggler from './components/SearchToggler.vue'
 
 export default Vue.extend({
   components: {
     SearchIcon,
     CrossIcon,
     ApplicationLogo,
-    MenuBurger
+    MenuBurger,
+    SearchToggler
   },
   data () {
     return {
       searchActive: false,
       showMobileMenu: false
+    }
+  },
+  watch: {
+    searchActive (newValue): void {
+      if (newValue) {
+        this.showMobileMenu = false
+      }
+    },
+    showMobileMenu (newValue): void {
+      if (newValue) {
+        this.searchActive = false
+      }
     }
   },
   methods: {
@@ -99,8 +110,8 @@ export default Vue.extend({
     margin: 0 !important;
   }
 
-  &__menu {
-    transition: all 300ms ease-in-out;
+  &__search-box {
+    background-color: transparent !important;
   }
 
   &__user-avatar {

@@ -43,6 +43,7 @@ export default Vue.extend({
     position: absolute;
     left: calc(50% - #{$stick-width / 2});
     right: auto;
+    border-radius: $stick-height;
     width: $stick-width;
     height: $stick-height;
     opacity: 1;
