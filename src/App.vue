@@ -1,20 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <application-navbar></application-navbar>
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue'
+import ApplicationNavbar from '@/components/ApplicationNavbar/ApplicationNavbar.vue'
+
+export default Vue.extend({
+  components: {
+    ApplicationNavbar
+  }
+})
+</script>
+
+
 <style lang="scss">
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #363636 !important;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
 }
 #nav {
   padding: 30px;
