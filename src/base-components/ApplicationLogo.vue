@@ -26,8 +26,9 @@ export default {}
     font-weight: 900;
     font-size: 20px;
     line-height: $letter-size; 
+    text-align: center;
     color: #fff;
-    background-color: #963D5A; // #4ECDC4, #FF6B6B
+    background-color: #963D5A;
 
     & + & {
       margin-left: -6px;

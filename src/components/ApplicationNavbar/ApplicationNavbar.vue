@@ -1,25 +1,31 @@
 <template>
   <nav class="navbar is-dark is-transparent app-navbar container">
     <div class="navbar-brand app-navbar__brand">
-      <div class="navbar-burger burger app-navbar__burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <menu-burger
+        class="app-navbar__burger"
+        :opened="showMobileMenu"
+        @click="toggleMobileMenu"
+      />
 
       <a class="navbar-item" href="https://bulma.io">
         <application-logo />
       </a>
     </div>
 
-    <div class="navbar-menu">
+    <div
+      :class="{
+        'app-navbar__menu': true,
+        'navbar-menu': true,
+        'is-hidden-touch': !showMobileMenu
+      }"
+    >
       <div class="navbar-start">
         <a class="navbar-item" href="https://bulma.io/">Home</a>
         <a class="navbar-item" href="https://bulma.io/">Shows</a>
         <a class="navbar-item" href="https://bulma.io/">Movies</a>
       </div>
       <div class="navbar-end">
-        <a class="navbar-item">
+        <a class="navbar-item is-hidden-touch">
           <transition mode="out-in" name="fade">
             <search-icon v-if="!searchActive" width="20" @click.native="searchActive = true" />
             <cross-icon v-else width="20" @click.native="searchActive = false" />
@@ -27,7 +33,7 @@
         </a>
         <!-- <a class="navbar-item" href="https://bulma.io/">Login</a> -->
         <!-- <a class="navbar-item" href="https://bulma.io/">Sign up</a> -->
-        <div class="navbar-item is-hoverable">
+        <div class="navbar-item is-hoverable is-hidden">
           <a class="app-navbar__user-avatar" href="/documentation/overview/start/">VK</a>
           <div class="navbar-dropdown is-right app-navbar__user-dropdown">
             <a class="navbar-item" href="/user/favourite">Favourites movies</a>
@@ -57,7 +63,13 @@ export default Vue.extend({
   },
   data () {
     return {
-      searchActive: false
+      searchActive: false,
+      showMobileMenu: false
+    }
+  },
+  methods: {
+    toggleMobileMenu (): void {
+      this.showMobileMenu = !this.showMobileMenu
     }
   }
 })
@@ -65,6 +77,8 @@ export default Vue.extend({
 
 
 <style lang="scss">
+@import "~bulma/sass/utilities/all";
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
@@ -85,6 +99,10 @@ export default Vue.extend({
     margin: 0 !important;
   }
 
+  &__menu {
+    transition: all 300ms ease-in-out;
+  }
+
   &__user-avatar {
     border-radius: 100px;
     width: 35px;
@@ -99,33 +117,48 @@ export default Vue.extend({
     }
   }
 
-  &__user-dropdown {
-    margin-top: 5px;
-    border: 0 !important;
-    border-radius: 6px;
-    background-color: rgb(90, 90, 90) !important;
-
-    .navbar-item {
-      color: whitesmoke;
-
-      &:hover {
-        color: inherit !important;
-      }
-    }
-
-    .navbar-divider {
-      background-color: #808080 !important;
-    }
-
-    &:before {
-      content: '';
+  .navbar-menu {
+    @include touch {
       display: block;
-      position: absolute;
-      bottom: 100%;
-      right: 22px;
-      border: 8px solid transparent;
-      border-bottom-color: rgb(90, 90, 90);
+      margin-left: 15px;
+      margin-right: 15px;
+      border-radius: 6px;
+      text-align: center;
+      background-color: rgb(90, 90, 90) !important;
     }
+  }
+
+  .navbar-item {
+    color: whitesmoke !important;
+  }
+
+  &__user-dropdown {
+    // margin-top: 5px;
+    // border: 0 !important;
+    // border-radius: 6px;
+    // background-color: rgb(90, 90, 90) !important;
+
+    // .navbar-item {
+    //   color: whitesmoke;
+
+    //   &:hover {
+    //     color: inherit !important;
+    //   }
+    // }
+
+    // .navbar-divider {
+    //   background-color: #808080 !important;
+    // }
+
+    // &:before {
+    //   content: '';
+    //   display: block;
+    //   position: absolute;
+    //   bottom: 100%;
+    //   right: 22px;
+    //   border: 8px solid transparent;
+    //   border-bottom-color: rgb(90, 90, 90);
+    // }
   }
 }
 </style>
