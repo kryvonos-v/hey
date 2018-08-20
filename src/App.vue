@@ -17,27 +17,18 @@ export default Vue.extend({
 
 
 <style lang="scss">
+@import "~bulma/sass/utilities/all";
+
+// Overriding of Bulma variables.
+$navbar-item-hover-background-color: #4c4b4b !default;
+$navbar-item-color: whitesmoke !default;
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
 html, body {
   margin: 0;
   padding: 0;
   background-color: #363636 !important;
-}
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #fff;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
