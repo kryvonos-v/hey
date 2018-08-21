@@ -1,6 +1,6 @@
 <template>
   <a>
-    <transition mode="out-in" name="fade">
+    <transition mode="out-in" name="search-toggler-fade">
       <search-icon
         v-if="!active"
         width="20"
@@ -38,6 +38,13 @@ export default Vue.extend({
 })
 </script>
 
-
 <style lang="scss">
+.search-toggler-fade {
+  &-enter-active, &-leave-active {
+    transition: opacity 250ms;
+  }
+  &-enter, &-leave-to {
+    opacity: 0;
+  }
+}
 </style>
