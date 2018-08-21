@@ -28,17 +28,28 @@
       </div>
       <div class="navbar-end">
         <search-toggler v-model="searchActive" class="navbar-item is-hidden-touch" />
-        <!-- <a class="navbar-item" href="https://bulma.io/">Login</a> -->
-        <!-- <a class="navbar-item" href="https://bulma.io/">Sign up</a> -->
-        <div class="navbar-item is-hoverable is-hidden">
-          <a class="app-navbar__user-avatar" href="/documentation/overview/start/">VK</a>
-          <div class="navbar-dropdown is-right app-navbar__user-dropdown">
-            <a class="navbar-item" href="/user/favourite">Favourites movies</a>
-            <hr class="navbar-divider">
-            <a class="navbar-item" href="/user/settings">Settings</a>
-            <a class="navbar-item" href="/signout">Sign out</a>
-          </div>
-        </div>
+        <template v-if="!userLoggedIn">
+          <a
+            v-for="navbarItem in [
+              { href: '#', text: 'Login' },
+              { href: '#', text: 'Sign up' }
+            ]"
+            :key="navbarItem.text"
+            :href="navbarItem.text"
+            class="navbar-item"
+          >
+            {{ navbarItem.text }}
+          </a>
+        </template>
+
+        <b-dropdown v-else class="navbar-item" position="is-bottom-left">
+          <a class="navbar-user-avatar" slot="trigger">VK</a>
+
+          <b-dropdown-item>Favorite movies</b-dropdown-item>
+          <span class="dropdown-divider" />
+          <b-dropdown-item>Settings</b-dropdown-item>
+          <b-dropdown-item>Sign out</b-dropdown-item>
+        </b-dropdown>
       </div>
     </div>
   </nav>
@@ -63,7 +74,8 @@ export default Vue.extend({
   data () {
     return {
       searchActive: false,
-      showMobileMenu: false
+      showMobileMenu: false,
+      userLoggedIn: true
     }
   },
   watch: {
@@ -89,13 +101,6 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "~bulma/sass/utilities/all";
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 
 .app-navbar {
   .navbar-item {
@@ -145,21 +150,7 @@ export default Vue.extend({
 
   &__user-dropdown {
     // margin-top: 5px;
-    // border: 0 !important;
     // border-radius: 6px;
-    // background-color: rgb(90, 90, 90) !important;
-
-    // .navbar-item {
-    //   color: whitesmoke;
-
-    //   &:hover {
-    //     color: inherit !important;
-    //   }
-    // }
-
-    // .navbar-divider {
-    //   background-color: #808080 !important;
-    // }
 
     // &:before {
     //   content: '';
@@ -170,6 +161,22 @@ export default Vue.extend({
     //   border: 8px solid transparent;
     //   border-bottom-color: rgb(90, 90, 90);
     // }
+  }
+}
+
+.navbar-user-avatar {
+  display: block;
+  border-radius: 100px;
+  width: 35px;
+  height: 35px;
+  font-weight: bold;
+  line-height: 37px;
+  text-align: center;
+  color: #d2d2d2;
+  background-color: rgb(90, 90, 90);
+
+  &:hover {
+    color: inherit;
   }
 }
 </style>

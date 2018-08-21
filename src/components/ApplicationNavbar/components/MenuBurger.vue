@@ -54,7 +54,7 @@ export default Vue.extend({
       top: calc(50% - 6px);
       bottom: auto;
       animation-name: move-and-rotate-top-stick-in;
-      animation-duration: 300ms;
+      animation-duration: 250ms;
       animation-timing-function: ease-in-out;
       animation-fill-mode: forwards;
 
@@ -76,7 +76,7 @@ export default Vue.extend({
     &:last-child {
       top: calc(50% + 4px);
       animation-name: move-and-rotate-bottom-stick-in;
-      animation-duration: 300ms;
+      animation-duration: 250ms;
       animation-timing-function: ease-in-out;
       animation-fill-mode: forwards;
 
