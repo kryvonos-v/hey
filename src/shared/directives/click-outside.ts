@@ -10,7 +10,7 @@ const isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0
 const instances: ClickOutsideInstance[] = []
 const events: string[] = isTouch ? ['touchstart', 'click'] : ['click']
 
-function onEvent (event: MouseEvent): void {
+function onEvent (event: Event): void {
   instances.forEach(({ el, modifiers, fn }) => {
     if (
       event.type === 'touchstart' &&
@@ -19,9 +19,9 @@ function onEvent (event: MouseEvent): void {
   
     if (
       event.target !== el &&
-      !el.contains(event.target)
+      !el.contains(<Node>event.target)
     ) {
-      fn && fn(event)
+      fn && fn(<MouseEvent>event)
     }
   })
 }
