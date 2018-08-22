@@ -11,9 +11,10 @@
         <application-logo />
       </a>
 
-      <search-toggler
+      <application-search
+        class="is-hidden-desktop app-navbar__mobile-search"
         v-model="searchActive"
-        class="navbar-item is-hidden-desktop app-navbar__search-box"
+        v-fit-dropdown-menu-to-document-width
       />
     </div>
 
@@ -40,28 +41,7 @@
       </div>
 
       <div class="navbar-end">
-        <b-dropdown
-          ref="searchDropdown"
-          class="navbar-item app-navbar__search-dropdown"
-          position="is-bottom-left"
-          v-click-outside="closeSearch"
-          @click.native.capture="closeUserDropdown"
-        >
-          <search-toggler
-            slot="trigger"
-            v-model="searchActive"
-            class="is-hidden-touch app-navbar__search app-navbar__search--desktop"
-            @click.native="focusSearchInput"
-          />
-
-          <b-dropdown-item custom @click.native="keepSearchDropdownOpen">
-            <base-input ref="searchInput" class="app-navbar__search-input" />
-          </b-dropdown-item>
-          <span class="dropdown-divider" />
-          <b-dropdown-item>The Avengers</b-dropdown-item>
-          <b-dropdown-item>Avengers: Age of Ultron</b-dropdown-item>
-          <b-dropdown-item>Avengers: Infinity War</b-dropdown-item>
-        </b-dropdown>
+        <application-search v-model="searchActive" class="is-hidden-touch" />
 
         <template v-if="!userLoggedIn">
           <a
@@ -80,8 +60,9 @@
         <b-dropdown
           v-else
           ref="userDropdown"
-          class="navbar-item app-navbar__user-dropdown"
+          class="navbar-item app-navbar__user-dropdown is-hidden-touch"
           position="is-bottom-left"
+          @click.native.capture="searchActive = false"
         >
           <a class="navbar-user-avatar" slot="trigger">VK</a>
 
@@ -102,7 +83,8 @@ import BaseInput from '@/base-components/forms/BaseInput.vue'
 import CrossIcon from '@/base-components/icons/CrossIcon.vue'
 import SearchIcon from '@/base-components/icons/SearchIcon.vue'
 import MenuBurger from './components/MenuBurger.vue'
-import SearchToggler from './components/SearchToggler.vue'
+import ApplicationSearch from './components/ApplicationSearch.vue'
+import fitDropdownMenuToDocumentWidth from './fit-dropdown-menu-to-document-width'
 
 export default Vue.extend({
   components: {
@@ -111,7 +93,10 @@ export default Vue.extend({
     CrossIcon,
     ApplicationLogo,
     MenuBurger,
-    SearchToggler
+    ApplicationSearch
+  },
+  directives: {
+    'fit-dropdown-menu-to-document-width': fitDropdownMenuToDocumentWidth
   },
   data () {
     return {
@@ -124,6 +109,7 @@ export default Vue.extend({
     searchActive (newValue): void {
       if (newValue) {
         this.showMobileMenu = false
+        this.closeUserDropdown()
       }
     },
     showMobileMenu (newValue): void {
@@ -135,22 +121,6 @@ export default Vue.extend({
   methods: {
     toggleMobileMenu (): void {
       this.showMobileMenu = !this.showMobileMenu
-    },
-    keepSearchDropdownOpen (event: MouseEvent): void {
-      let dropdown = <any>this.$refs.searchDropdown
-      dropdown.isActive = true
-    },
-    focusSearchInput (event: MouseEvent): void {
-      let searchInput = <any>this.$refs.searchInput
-
-      setTimeout(() => {
-        searchInput.$el.focus()
-      }, 1)
-    },
-    closeSearch (): void {
-      let userDropdown = <any>this.$refs.searchDropdown
-      userDropdown.isActive = false
-      this.searchActive = false
     },
     closeUserDropdown (): void {
       let userDropdown = <any>this.$refs.userDropdown
@@ -168,14 +138,16 @@ export default Vue.extend({
   .dropdown-content {
     position: relative;
 
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: 100%;
-      right: 8px;
-      border: 8px solid transparent;
-      border-bottom-color: rgb(90, 90, 90);
+    @include desktop {
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 100%;
+        right: 8px;
+        border: 8px solid transparent;
+        border-bottom-color: rgb(90, 90, 90);
+      }
     }
   }
 
@@ -195,24 +167,23 @@ export default Vue.extend({
     background-color: transparent !important;
   }
 
-  &__search {
-    color: whitesmoke;
-
-    &:hover {
-      color: inherit;
-    }
-
-    &--desktop {
-      display: flex;
-      align-items: center;
-    }
-  }
-
   &__search-input {
-    width: 300px;
+    width: 100%;
+
+    @include desktop {
+      width: 300px;
+    }
   }
 
-  &__search-dropdown {
+  &__mobile-search {
+    .dropdown-menu {
+      @include touch {
+        padding-top: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+    
     .dropdown-content {
       &:before {
         right: 14px;
@@ -258,5 +229,9 @@ export default Vue.extend({
   &:hover {
     color: inherit;
   }
+}
+
+.dropdown .background {
+  display: none !important;
 }
 </style>
