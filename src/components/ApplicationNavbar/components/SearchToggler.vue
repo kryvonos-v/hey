@@ -41,7 +41,7 @@ export default Vue.extend({
 <style lang="scss">
 .search-toggler-fade {
   &-enter-active, &-leave-active {
-    transition: opacity 250ms;
+    transition: opacity 150ms;
   }
   &-enter, &-leave-to {
     opacity: 0;
