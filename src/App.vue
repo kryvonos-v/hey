@@ -1,19 +1,16 @@
 <template>
   <div id="app">
     <application-navbar />
-    <!-- <application-search /> -->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import ApplicationNavbar from '@/components/ApplicationNavbar/ApplicationNavbar.vue'
-import ApplicationSearch from '@/components/ApplicationSearch/ApplicationSearch.vue'
 
 export default Vue.extend({
   components: {
-    ApplicationNavbar,
-    ApplicationSearch
+    ApplicationNavbar
   }
 })
 </script>
