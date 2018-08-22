@@ -35,9 +35,7 @@
           :key="navbarItem.text"
           :href="navbarItem.href"
           class="navbar-item"
-        >
-          {{ navbarItem.text }}
-        </a>
+        >{{ navbarItem.text }}</a>
       </div>
 
       <div class="navbar-end">
@@ -52,25 +50,16 @@
             :key="navbarItem.text"
             :href="navbarItem.text"
             class="navbar-item"
-          >
-            {{ navbarItem.text }}
-          </a>
+          >{{ navbarItem.text }}</a>
         </template>
 
-        <b-dropdown
+        <user-menu
           v-else
           ref="userDropdown"
-          class="navbar-item app-navbar__user-dropdown is-hidden-touch"
-          position="is-bottom-left"
+          v-model="showUserMenu"
+          class="app-navbar__user-dropdown is-hidden-touch"
           @click.native.capture="searchActive = false"
-        >
-          <a class="navbar-user-avatar" slot="trigger">VK</a>
-
-          <b-dropdown-item>Favorite movies</b-dropdown-item>
-          <span class="dropdown-divider" />
-          <b-dropdown-item>Settings</b-dropdown-item>
-          <b-dropdown-item>Sign out</b-dropdown-item>
-        </b-dropdown>
+        />
       </div>
     </div>
   </nav>
@@ -79,21 +68,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import ApplicationLogo from '@/base-components/ApplicationLogo.vue'
-import BaseInput from '@/base-components/forms/BaseInput.vue'
-import CrossIcon from '@/base-components/icons/CrossIcon.vue'
-import SearchIcon from '@/base-components/icons/SearchIcon.vue'
 import MenuBurger from './components/MenuBurger.vue'
 import ApplicationSearch from './components/ApplicationSearch.vue'
+import UserMenu from './components/UserMenu.vue'
 import fitDropdownMenuToDocumentWidth from './fit-dropdown-menu-to-document-width'
 
 export default Vue.extend({
   components: {
-    SearchIcon,
-    BaseInput,
-    CrossIcon,
     ApplicationLogo,
     MenuBurger,
-    ApplicationSearch
+    ApplicationSearch,
+    UserMenu
   },
   directives: {
     'fit-dropdown-menu-to-document-width': fitDropdownMenuToDocumentWidth
@@ -102,6 +87,7 @@ export default Vue.extend({
     return {
       searchActive: false,
       showMobileMenu: false,
+      showUserMenu: false,
       userLoggedIn: true
     }
   },
@@ -109,7 +95,7 @@ export default Vue.extend({
     searchActive (newValue): void {
       if (newValue) {
         this.showMobileMenu = false
-        this.closeUserDropdown()
+        this.showUserMenu = false
       }
     },
     showMobileMenu (newValue): void {
@@ -121,10 +107,6 @@ export default Vue.extend({
   methods: {
     toggleMobileMenu (): void {
       this.showMobileMenu = !this.showMobileMenu
-    },
-    closeUserDropdown (): void {
-      let userDropdown = <any>this.$refs.userDropdown
-      userDropdown.isActive = false
     }
   }
 })
