@@ -4,14 +4,15 @@
     class="navbar-item app-search"
     position="is-bottom-left"
     :mobile-modal="false"
-    v-click-outside="() => $emit('toggled', false)"
+    :active="active"
+    :close-when-click-outside="false"
+    @active-change="$emit('active-change', $event)"
   >
     <search-toggler
       slot="trigger"
       :active="active"
       class="app-search__toggler"
       @click.native="focusSearchInput"
-      @toggled="$emit('toggled', $event)"
     />
 
     <b-dropdown-item custom>
@@ -36,21 +37,12 @@ export default Vue.extend({
   },
   model: {
     prop: 'active',
-    event: 'toggled'
+    event: 'active-change'
   },
   props: {
     active: {
       type: Boolean,
       default: false
-    }
-  },
-  watch: {
-    active (newActive) {
-      if (!newActive) {
-        let dropdownEl = <any>this.$refs.dropdown
-        
-        dropdownEl.isActive = newActive
-      }
     }
   },
   methods: {

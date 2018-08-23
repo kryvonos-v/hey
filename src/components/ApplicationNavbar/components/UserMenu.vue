@@ -3,6 +3,7 @@
     ref="dropdown"
     class="navbar-item"
     position="is-bottom-left"
+    :active="active"
     @active-change="$emit('active-change', $event)"
   >
     <a class="navbar-user-avatar" slot="trigger">VK</a>
@@ -26,14 +27,6 @@ export default Vue.extend({
     active: {
       type: Boolean,
       default: false
-    }
-  },
-  watch: {
-    active (newActive) {
-      if (!newActive) {
-        let dropdown = <any>this.$refs.dropdown
-        dropdown.isActive = false
-      }
     }
   }
 })

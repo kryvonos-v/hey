@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar is-dark is-transparent app-navbar container">
+  <nav
+    class="navbar is-dark is-transparent app-navbar container"
+    v-click-outside="closeSearch"
+  >
     <div class="navbar-brand app-navbar__brand">
       <menu-burger
         class="app-navbar__burger is-hidden-desktop"
@@ -39,7 +42,10 @@
       </div>
 
       <div class="navbar-end">
-        <application-search v-model="searchActive" class="is-hidden-touch" />
+        <application-search
+          v-model="searchActive"
+          class="is-hidden-touch"
+        />
 
         <template v-if="!userLoggedIn">
           <a
@@ -54,11 +60,9 @@
         </template>
 
         <user-menu
-          v-else
-          ref="userDropdown"
+          v-else ref="userDropdown"
           v-model="showUserMenu"
           class="app-navbar__user-dropdown is-hidden-touch"
-          @click.native.capture="searchActive = false"
         />
       </div>
     </div>
@@ -95,18 +99,25 @@ export default Vue.extend({
     searchActive (newValue): void {
       if (newValue) {
         this.showMobileMenu = false
-        this.showUserMenu = false
       }
     },
     showMobileMenu (newValue): void {
       if (newValue) {
-        this.searchActive = false
+        this.closeSearch()
+      }
+    },
+    showUserMenu (newValue): void {
+      if (newValue) {
+        this.closeSearch()
       }
     }
   },
   methods: {
     toggleMobileMenu (): void {
       this.showMobileMenu = !this.showMobileMenu
+    },
+    closeSearch (): void {
+      this.searchActive = false
     }
   }
 })
