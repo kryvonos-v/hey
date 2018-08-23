@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <application-navbar />
+    <p>Lorem ipsum</p>
   </div>
 </template>
 

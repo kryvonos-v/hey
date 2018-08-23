@@ -5,9 +5,13 @@ import store from './store'
 import './styles/main.scss'
 import Buefy from 'buefy'
 import clickOutside from './shared/directives/click-outside'
+import Dropdown from './components/Dropdown/Dropdown.vue'
 
-Vue.use(Buefy)
+let BuefyComponents = <any>Buefy
+
 Vue.directive('click-outside', clickOutside)
+Vue.component('b-dropdown', Dropdown)
+Vue.component(BuefyComponents.DropdownItem.name, BuefyComponents.DropdownItem)
 
 Vue.config.productionTip = false
 
