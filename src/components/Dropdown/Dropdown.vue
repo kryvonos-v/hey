@@ -1,10 +1,17 @@
 <template>
-  <div class="dropdown" :class="rootClasses">
+  <div
+    class="dropdown"
+    :class="rootClasses"
+    v-click-outside="() => {
+      if (closeWhenClickOutside) {
+        mutableActive = false
+      }
+    }"
+  >
     <div
       v-if="!inline"
       role="button"
       class="dropdown-trigger"
-      v-click-outside="() => isActive = false"
       @click="toggle"
     >
       <slot name="trigger" />
@@ -13,19 +20,19 @@
     <transition name="fade">
       <div
         v-if="isMobileModal"
-        v-show="isActive"
+        v-show="mutableActive"
         class="background"
       />
     </transition>
 
     <transition name="fade">
       <div
-        v-show="(!disabled && (isActive || hoverable)) || inline"
+        v-show="(!disabled && (mutableActive || hoverable)) || inline"
         ref="dropdownMenu"
         class="dropdown-menu"
       >
         <div class="dropdown-content">
-          <slot/>
+          <slot />
         </div>
       </div>
     </transition>
@@ -35,8 +42,14 @@
 <script lang="ts">
 import Vue from 'vue'
 
+let counter: number = -1
+
 export default Vue.extend({
   name: 'BDropdown',
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     value: {
       type: [String, Number, Boolean, Object, Array, Symbol, Function],
@@ -45,6 +58,19 @@ export default Vue.extend({
     disabled: {
       type: Boolean,
       default: false
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    // When we use two times times the same component containing dropdown
+    // then we need to pass false for closeWhenClickOutside prop, otherwise
+    // we will see weird behaviour. When we toggle first component with
+    // dropdown then click-outside directive fires on another component.
+    // This lead to case when we cannot close dropdown.
+    closeWhenClickOutside: {
+      type: Boolean,
+      default: true
     },
     hoverable: Boolean,
     inline: Boolean,
@@ -66,7 +92,8 @@ export default Vue.extend({
   data () {
     return {
       selected: this.value,
-      isActive: false,
+      mutableActive: this.active,
+      counter: ++counter,
       _isDropdown: true // Used internally by DropdownItem
     }
   },
@@ -78,7 +105,7 @@ export default Vue.extend({
           'is-disabled': this.disabled,
           'is-hoverable': this.hoverable,
           'is-inline': this.inline,
-          'is-active': this.isActive || this.inline,
+          'is-active': this.mutableActive || this.inline,
           'is-mobile-modal': this.isMobileModal
         }
       ]
@@ -95,10 +122,14 @@ export default Vue.extend({
       this.selected = value
     },
 
+    active (value) {
+      this.mutableActive = value
+    },
+
     /**
-     * Emit event when isActive value is changed.
+     * Emit event when mutableActive value is changed.
      */
-    isActive (value) {
+    mutableActive (value) {
       this.$emit('active-change', value)
     }
   },
@@ -112,11 +143,9 @@ export default Vue.extend({
     selectItem (value) {
       if (this.selected !== value) {
         this.$emit('change', value)
-        this.selected = value
       }
 
-      this.$emit('input', value)
-      this.isActive = false
+      this.mutableActive = false
     },
 
     /**
@@ -125,7 +154,7 @@ export default Vue.extend({
     toggle () {
       if (this.disabled || this.hoverable) return
 
-      this.isActive = !this.isActive
+      this.mutableActive = !this.mutableActive
     }
   }
 })
