@@ -99,7 +99,7 @@ export default Vue.extend({
 
         this.loading = false
         this.searchError = error
-        this.searchResults = searchResults as ss
+        this.searchResults = searchResults as MovieSearchResults
           ? searchResults.results
           : []
       } else {
@@ -111,7 +111,7 @@ export default Vue.extend({
       return Number(movie.releaseDate.split('-')[0])
     },
     focusSearchInput (event: MouseEvent): void {
-      let searchInput = <any>this.$refs.searchInput
+      let searchInput = this.$refs.searchInput as any
 
       setTimeout(() => {
         searchInput.$el.focus()

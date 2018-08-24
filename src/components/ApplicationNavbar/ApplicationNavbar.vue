@@ -1,75 +1,77 @@
 <template>
-  <nav
-    class="
-      navbar container
-      is-dark is-transparent
-      app-navbar use-dropdown-with-tail"
-    v-click-outside="closeSearch"
-  >
-    <div class="navbar-brand app-navbar__brand">
-      <menu-burger
-        class="app-navbar__burger is-hidden-desktop"
-        :opened="showMobileMenu"
-        @click="toggleMobileMenu"
-      />
-
-      <a class="navbar-item" href="/">
-        <application-logo />
-      </a>
-
-      <application-search
-        class="is-hidden-desktop app-navbar__mobile-search"
-        v-model="searchActive"
-        v-fit-dropdown-menu-to-document-width
-      />
-    </div>
-
-    <div
-      :class="{
-        'app-navbar__menu': true,
-        'navbar-menu': true,
-        'is-hidden-touch': !showMobileMenu
-      }"
+  <div class="container">
+    <nav
+      class="
+        navbar app-navbar__nav
+        is-dark is-transparent
+        app-navbar use-dropdown-with-tail"
+      v-click-outside="closeSearch"
     >
-      <div class="navbar-start">
-        <a
-          v-for="navbarItem in [
-            { href: '#', text: 'Home' },
-            { href: '#', text: 'Shows' },
-            { href: '#', text: 'Movies' }
-          ]"
-          :key="navbarItem.text"
-          :href="navbarItem.href"
-          class="navbar-item"
-        >{{ navbarItem.text }}</a>
-      </div>
-
-      <div class="navbar-end">
-        <application-search
-          v-model="searchActive"
-          class="app-navbar__search-on-desktop is-hidden-touch"
+      <div class="navbar-brand app-navbar__brand">
+        <menu-burger
+          class="app-navbar__burger is-hidden-desktop"
+          :opened="showMobileMenu"
+          @click="toggleMobileMenu"
         />
 
-        <template v-if="!userLoggedIn">
+        <a class="navbar-item" href="/">
+          <application-logo />
+        </a>
+
+        <application-search
+          class="is-hidden-desktop app-navbar__mobile-search"
+          v-model="searchActive"
+          v-fit-dropdown-menu-to-document-width
+        />
+      </div>
+
+      <div
+        :class="{
+          'app-navbar__menu': true,
+          'navbar-menu': true,
+          'is-hidden-touch': !showMobileMenu
+        }"
+      >
+        <div class="navbar-start">
           <a
             v-for="navbarItem in [
-              { href: '#', text: 'Login' },
-              { href: '#', text: 'Sign up' }
+              { href: '#', text: 'Home' },
+              { href: '#', text: 'Shows' },
+              { href: '#', text: 'Movies' }
             ]"
             :key="navbarItem.text"
-            :href="navbarItem.text"
+            :href="navbarItem.href"
             class="navbar-item"
           >{{ navbarItem.text }}</a>
-        </template>
+        </div>
 
-        <user-menu
-          v-else ref="userDropdown"
-          v-model="showUserMenu"
-          class="app-navbar__user-dropdown is-hidden-touch"
-        />
+        <div class="navbar-end">
+          <application-search
+            v-model="searchActive"
+            class="app-navbar__search-on-desktop is-hidden-touch"
+          />
+
+          <template v-if="!userLoggedIn">
+            <a
+              v-for="navbarItem in [
+                { href: '#', text: 'Login' },
+                { href: '#', text: 'Sign up' }
+              ]"
+              :key="navbarItem.text"
+              :href="navbarItem.text"
+              class="navbar-item"
+            >{{ navbarItem.text }}</a>
+          </template>
+
+          <user-menu
+            v-else ref="userDropdown"
+            v-model="showUserMenu"
+            class="app-navbar__user-dropdown is-hidden-touch"
+          />
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script lang="ts">
@@ -149,6 +151,13 @@ export default Vue.extend({
 }
 
 .app-navbar {
+  // &__nav {
+  //   @include desktop {
+  //     margin-left: -0.75rem;
+  //     margin-right: -0.7rem;
+  //   }
+  // }
+
   .navbar-item {
     font-weight: bold;
   }

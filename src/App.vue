@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <application-navbar />
-    <p>Lorem ipsum</p>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -16,11 +16,16 @@ export default Vue.extend({
 })
 </script>
 
-
 <style lang="scss">
 @import "~bulma/sass/utilities/all";
 
 // Overriding of Bulma variables.
+$body-family: 'Poppins', sans-serif;
+$family-sans-serif: 'Arial', sans-serif;
+$title-color: whitesmoke !default;
+
+$section-padding: 2rem 1rem !default;
+
 $navbar-item-hover-background-color: #4c4b4b !default;
 $navbar-item-color: whitesmoke !default;
 $navbar-dropdown-background-color: rgb(90, 90, 90) !default;
@@ -39,6 +44,15 @@ $dropdown-divider-background-color: #808080 !default;
 
 .dropdown-divider {
   height: 2px;
+}
+
+.divider {
+  background-color: #808080;
+  border: none;
+  display: block;
+  height: 2px;
+  width: 100%;
+  // margin: 0.5rem 0;
 }
 
 html, body {
