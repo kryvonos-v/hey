@@ -1,3 +1,5 @@
+import { Genre } from './genre'
+
 export interface MovieBaseDetails {
   id: string,
   title: string,
@@ -14,9 +16,7 @@ export interface MovieBaseDetails {
   voteAverage: number
 }
 
-export interface MovieGenres {
-  genres?: any[]
-}
+export interface MovieGenre extends Genre {}
 
 export interface MovieProductionCompany {
   id: number,
@@ -35,7 +35,10 @@ export interface MovieSpokenLanguage {
   iso639_1: string
 }
 
-export interface MovieExtendedDetails extends MovieBaseDetails, MovieGenres {
+export interface MovieGenre extends Genre {}
+
+export interface MovieExtendedDetails extends MovieBaseDetails {
+  genres: Genre[],
   belongsToCollection?: null | object,
   budget?: number,
   homepage?: string | null,

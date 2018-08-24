@@ -1,4 +1,7 @@
-import { MovieSearchParams } from '@/types/api'
+import {
+  MovieSearchParams,
+  MovieGenresResponse
+} from '@/types/api'
 import { MovieSearchResults } from '@/types/movie'
 import * as endpoint from '@/shared/enums/endpoint'
 import axios, { AxiosResponse } from 'axios'
@@ -16,6 +19,10 @@ let axiosMovieDB = axios.create({
   }]
 })
 
-export async function searchMovie (params: MovieSearchParams): Promise<AxiosResponse<MovieSearchResults>> {
+export function searchMovie (params: MovieSearchParams): Promise<AxiosResponse<MovieSearchResults>> {
   return axiosMovieDB.get(endpoint.get.searchMovie(), { params })
+}
+
+export function getMovieGenres (): Promise<AxiosResponse<MovieGenresResponse>> {
+  return axiosMovieDB.get(endpoint.get.getMoviesGenres())
 }

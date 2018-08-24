@@ -1,4 +1,7 @@
-import { MovieDetails } from './movie'
+import {
+  MovieDetails,
+  MovieGenre
+} from './movie'
 
 export interface MovieAPIBaseParams {
   apiKey?: string,
@@ -14,7 +17,8 @@ export interface MovieSearchParams extends MovieAPIBaseParams {
   primaryReleaseYear?: number
 }
 
-export interface MovieGenresParams extends MovieAPIBaseParams {
+export interface MovieGenresResponse extends MovieAPIBaseParams {
+  genres: MovieGenre[]
 }
 
 export interface MovieDetailsParams extends MovieAPIBaseParams {
