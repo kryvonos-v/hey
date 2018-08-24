@@ -14,13 +14,6 @@ export interface MovieSearchParams extends MovieAPIBaseParams {
   primaryReleaseYear?: number
 }
 
-export interface MovieSearchResponse {
-  page?: number,
-  results?: MovieDetails[],
-  totalResults?: number,
-  totalPages?: number
-}
-
 export interface MovieGenresParams extends MovieAPIBaseParams {
 }
 

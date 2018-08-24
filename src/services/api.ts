@@ -1,8 +1,7 @@
-import {
-  MovieSearchParams
-} from '@/types/api'
+import { MovieSearchParams } from '@/types/api'
+import { MovieSearchResults } from '@/types/movie'
 import * as endpoint from '@/shared/enums/endpoint'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import camelCaseKeys from 'camelcase-keys'
 
 let axiosMovieDB = axios.create({
@@ -17,6 +16,6 @@ let axiosMovieDB = axios.create({
   }]
 })
 
-export async function searchMovie (params: MovieSearchParams) {
+export async function searchMovie (params: MovieSearchParams): Promise<AxiosResponse<MovieSearchResults>> {
   return axiosMovieDB.get(endpoint.get.searchMovie(), { params })
 }
