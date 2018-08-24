@@ -1,1 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
+
+.is-text-overflow {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -167,11 +167,11 @@ export default Vue.extend({
     }
   }
 
-  &__search-input {
-    width: 100%;
-
-    @include desktop {
-      width: 300px;
+  &__search-on-desktop {
+    .dropdown-content {
+      @include desktop {
+        width: 400px;
+      }
     }
   }
 

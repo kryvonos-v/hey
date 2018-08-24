@@ -19,28 +19,52 @@
       <base-input
         placeholder="Type movie name"
         ref="searchInput"
-        class="app-navbar__search-input"
+        class="app-search__input"
+        v-model="searchInput"
+        @input="handleSearchInput"
       />
     </b-dropdown-item>
     <span class="dropdown-divider" />
 
     <b-dropdown-item
-      v-if="!results" custom
-      class="app-search__results-hint"
-    >Search results appear here</b-dropdown-item>
+      v-if="searchError"
+      custom class="app-search__info"
+    >Ooops, something went wrong :(</b-dropdown-item>
 
-    <template v-else>
-      <b-dropdown-item>The Avengers</b-dropdown-item>
-      <b-dropdown-item>Avengers: Age of Ultron</b-dropdown-item>
-      <b-dropdown-item>Avengers: Infinity War</b-dropdown-item>
+    <b-dropdown-item
+      v-else-if="loading"
+      custom class="app-search__info"
+    >We are searching for the movies...</b-dropdown-item>
+
+    <b-dropdown-item
+      v-else-if="searchInput === ''"
+      custom class="app-search__info"
+    >Type something to see results</b-dropdown-item>
+
+    <b-dropdown-item
+      v-else-if="!searchResults || !searchResults.length"
+      custom class="app-search__info"
+    >We could not find anything :(</b-dropdown-item>
+
+    <template v-else-if="searchResults">
+      <b-dropdown-item
+        v-for="result in searchResults.slice(0, 10)"
+        :key="result.id"
+        class="app-search__result is-text-overflow"
+      >
+        <span class="app-search__movie-title">{{ result.title }} </span>
+        <span class="app-search__movie-year">({{ getMovieReleaseYear(result) }})</span>
+      </b-dropdown-item>
     </template>
   </b-dropdown>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { VNodeDirective } from 'vue'
 import BaseInput from '@/base-components/forms/BaseInput.vue'
 import SearchToggler from './SearchToggler.vue'
+import to from 'await-to-js'
+import { MovieSearchResults, MovieDetails } from '@/types/movie'
 
 export default Vue.extend({
   components: {
@@ -57,7 +81,35 @@ export default Vue.extend({
       default: false
     }
   },
+  data () {
+    return {
+      loading: false,
+      searchInput: '',
+      searchResults: [],
+      searchError: null
+    }
+  },
   methods: {
+    async handleSearchInput (event: any) {
+      let query = event.target.value
+
+      if (query !== '') {
+        this.loading = true
+        let [error, searchResults] = await to(this.$store.dispatch('searchMovie', { query }))
+
+        this.loading = false
+        this.searchError = error
+        this.searchResults = searchResults as ss
+          ? searchResults.results
+          : []
+      } else {
+        this.searchError = null
+        this.searchResults = []
+      }
+    },
+    getMovieReleaseYear (movie: MovieDetails): number {
+      return Number(movie.releaseDate.split('-')[0])
+    },
     focusSearchInput (event: MouseEvent): void {
       let searchInput = <any>this.$refs.searchInput
 
@@ -65,11 +117,6 @@ export default Vue.extend({
         searchInput.$el.focus()
       }, 1)
     },
-  },
-  computed: {
-    results (): boolean {
-      return false
-    }
   }
 })
 </script>
@@ -86,8 +133,20 @@ export default Vue.extend({
     }
   }
 
+  &__input {
+    width: 100%;
+  }
+
+  &__movie-title {
+    font-weight: strong;
+  }
+
+  &__movie-year {
+    font-weight: normal;
+  }
+
   // We use [class] to increase selector specifity.
-  &__results-hint[class] {
+  &__info[class] {
     color: #b7b7b7;
     font-weight: normal;
   }
