@@ -1,4 +1,5 @@
 import { Genre } from './genre'
+import { ResourceResults } from './api'
 
 export interface MovieBaseDetails {
   id: string,
@@ -38,7 +39,7 @@ export interface MovieSpokenLanguage {
 export interface MovieGenre extends Genre {}
 
 export interface MovieExtendedDetails extends MovieBaseDetails {
-  genres: Genre[],
+  genres: MovieGenre[],
   belongsToCollection?: null | object,
   budget?: number,
   homepage?: string | null,
@@ -56,9 +57,4 @@ export interface MovieDetails extends MovieBaseDetails {
   genreIds?: number[]
 }
 
-export interface MovieSearchResults {
-  page: number,
-  results: MovieDetails[],
-  totalResults: number,
-  totalPages: number
-}
+export interface MovieResults extends ResourceResults<MovieDetails> {}

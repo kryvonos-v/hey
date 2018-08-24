@@ -3,12 +3,12 @@ import {
   MovieGenre
 } from './movie'
 
-export interface MovieAPIBaseParams {
+export interface TheMovieDBBaseParams {
   apiKey?: string,
   language?: string,
 }
 
-export interface MovieSearchParams extends MovieAPIBaseParams {
+export interface MovieSearchParams extends TheMovieDBBaseParams {
   query: string,
   page?: number,
   includeAdult?: boolean,
@@ -17,10 +17,22 @@ export interface MovieSearchParams extends MovieAPIBaseParams {
   primaryReleaseYear?: number
 }
 
-export interface MovieGenresResponse extends MovieAPIBaseParams {
+export interface PopularMoviesParams extends TheMovieDBBaseParams {
+  page?: number,
+  region?: string
+}
+
+export interface MovieGenresResponse extends TheMovieDBBaseParams {
   genres: MovieGenre[]
 }
 
-export interface MovieDetailsParams extends MovieAPIBaseParams {
+export interface MovieDetailsParams extends TheMovieDBBaseParams {
   appendToResponse?: string
+}
+
+export interface ResourceResults<T> {
+  page: number,
+  results: T[],
+  totalResults: number,
+  totalPages: number
 }

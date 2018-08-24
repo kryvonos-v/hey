@@ -1,7 +1,11 @@
-import { MovieGenre } from '@/types/movie'
+import {
+  MovieGenre,
+  MovieDetails
+} from '@/types/movie'
 
 export interface RootState {}
 
 export interface MoviesState {
-  genres: MovieGenre[]
+  genres: MovieGenre[],
+  popular: MovieDetails[]
 }

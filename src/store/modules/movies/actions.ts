@@ -5,9 +5,13 @@ import {
 import { ActionTree } from 'vuex'
 import {
   searchMovie,
-  getMovieGenres
+  getMovieGenres,
+  getPopularMovies
 } from '@/services/api'
-import { MovieSearchParams } from '@/types/api'
+import {
+  MovieSearchParams,
+  PopularMoviesParams
+} from '@/types/api'
 import to from 'await-to-js'
 
 const actions: ActionTree<MoviesState, RootState> = {
@@ -20,6 +24,16 @@ const actions: ActionTree<MoviesState, RootState> = {
       if (response) {
         commit('SET_MOVIE_GENRES', response.data.genres)
       }
+    }
+  },
+
+  getPopularMovies: {
+    root: true,
+    async handler ({ commit }, params: PopularMoviesParams) {
+      const [error, response] = await to(getPopularMovies(params))
+
+      if (error) throw error
+      if (response) return response.data
     }
   },
 
