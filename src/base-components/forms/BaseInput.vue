@@ -14,6 +14,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import '~bulma/sass/utilities/all';
+
 .base-input {
   border: 0;
   border-radius: 8px;
@@ -23,6 +25,10 @@ export default Vue.extend({
   color: whitesmoke;
   background-color: #808080;
   outline: none;
+
+  @include placeholder {
+    color: #b7b7b7;
+  }
 }
 </style>
 
