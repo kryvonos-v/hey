@@ -5,7 +5,6 @@ import {
 import { GetterTree } from 'vuex'
 
 const getters: GetterTree<MoviesState, RootState> = {
-
 }
 
 export default getters

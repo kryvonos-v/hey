@@ -6,6 +6,6 @@ import {
 export interface RootState {}
 
 export interface MoviesState {
-  genres: MovieGenre[],
-  popular: MovieDetails[]
+  genresMap: { [key: string]: MovieGenre },
+  genresIds: number[]
 }

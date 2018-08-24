@@ -12,7 +12,9 @@ import {
   MovieSearchParams,
   PopularMoviesParams
 } from '@/types/api'
+import { MovieGenre } from '@/types/movie'
 import to from 'await-to-js'
+import { normalizeArray } from '@/store/utils'
 
 const actions: ActionTree<MoviesState, RootState> = {
   getMovieGenres: {
@@ -22,7 +24,11 @@ const actions: ActionTree<MoviesState, RootState> = {
 
       if (error) throw error
       if (response) {
-        commit('SET_MOVIE_GENRES', response.data.genres)
+        const genres: MovieGenre[] = response.data.genres
+        const normalized = normalizeArray(genres)
+
+        commit('SET_MOVIE_GENRES_MAP', normalized.entities.map)
+        commit('SET_MOVIE_GENRES_IDS', normalized.result.array)
       }
     }
   },
@@ -40,7 +46,7 @@ const actions: ActionTree<MoviesState, RootState> = {
   searchMovie: {
     root: true,
     async handler (context, params: MovieSearchParams) {
-      let [error, response] = await to(searchMovie(params))
+      const [error, response] = await to(searchMovie(params))
 
       if (error) throw error
       if (response) return response.data
