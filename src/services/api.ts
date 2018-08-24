@@ -1,5 +1,5 @@
 import {
-  MovieSearchRequest
+  MovieSearchParams
 } from '@/types/api'
 import * as endpoint from '@/shared/enums/endpoint'
 import axios from 'axios'
@@ -17,6 +17,6 @@ let axiosMovieDB = axios.create({
   }]
 })
 
-export async function searchMovie (params: MovieSearchRequest) {
+export async function searchMovie (params: MovieSearchParams) {
   return axiosMovieDB.get(endpoint.get.searchMovie(), { params })
 }

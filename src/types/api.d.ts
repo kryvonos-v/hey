@@ -1,11 +1,11 @@
 import { MovieDetails } from './movie'
 
-export interface MovieAPIBaseRequest {
+export interface MovieAPIBaseParams {
   apiKey?: string,
   language?: string,
 }
 
-export interface MovieSearchRequest extends MovieAPIBaseRequest {
+export interface MovieSearchParams extends MovieAPIBaseParams {
   query: string,
   page?: number,
   includeAdult?: boolean,
@@ -21,9 +21,9 @@ export interface MovieSearchResponse {
   totalPages?: number
 }
 
-export interface MovieGenresRequest extends MovieAPIBaseRequest {
+export interface MovieGenresParams extends MovieAPIBaseParams {
 }
 
-export interface MovieDetailsRequest extends MovieAPIBaseRequest {
+export interface MovieDetailsParams extends MovieAPIBaseParams {
   appendToResponse?: string
 }
