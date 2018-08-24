@@ -1,15 +1,38 @@
 <template>
   <input
+    v-bind="$attrs"
     class="base-input"
     type="text"
-    v-on="$listeners"
-  />  
+    :value="value"
+    v-on="listeners"
+  />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
+  model: {
+    prop: 'value',
+    event: 'input-value'
+  },
+  props: {
+    value: {
+      type: [String, Number],
+      default: ''
+    }
+  },
+  computed: {
+    listeners (): object {
+      return {
+        ...this.$listeners,
+        'input': (event: any) => {
+          this.$emit('input', event)
+          this.$emit('input-value', event.target.value)
+        }
+      }
+    }
+  }
 })
 </script>
 
