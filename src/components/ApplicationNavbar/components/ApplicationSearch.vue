@@ -16,12 +16,24 @@
     />
 
     <b-dropdown-item custom>
-      <base-input ref="searchInput" class="app-navbar__search-input" />
+      <base-input
+        placeholder="Type movie name"
+        ref="searchInput"
+        class="app-navbar__search-input"
+      />
     </b-dropdown-item>
     <span class="dropdown-divider" />
-    <b-dropdown-item>The Avengers</b-dropdown-item>
-    <b-dropdown-item>Avengers: Age of Ultron</b-dropdown-item>
-    <b-dropdown-item>Avengers: Infinity War</b-dropdown-item>
+
+    <b-dropdown-item
+      v-if="!results" custom
+      class="app-search__results-hint"
+    >Search results appear here</b-dropdown-item>
+
+    <template v-else>
+      <b-dropdown-item>The Avengers</b-dropdown-item>
+      <b-dropdown-item>Avengers: Age of Ultron</b-dropdown-item>
+      <b-dropdown-item>Avengers: Infinity War</b-dropdown-item>
+    </template>
   </b-dropdown>
 </template>
 
@@ -53,6 +65,11 @@ export default Vue.extend({
         searchInput.$el.focus()
       }, 1)
     },
+  },
+  computed: {
+    results (): boolean {
+      return false
+    }
   }
 })
 </script>
@@ -67,6 +84,12 @@ export default Vue.extend({
     &:hover {
       color: inherit;
     }
+  }
+
+  // We use [class] to increase selector specifity.
+  &__results-hint[class] {
+    color: #b7b7b7;
+    font-weight: normal;
   }
 }
 </style>

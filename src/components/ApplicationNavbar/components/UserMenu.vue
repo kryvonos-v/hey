@@ -32,3 +32,25 @@ export default Vue.extend({
 })
 </script>
 
+<style lang="scss">
+@import '~bulma/sass/utilities/all';
+
+.navbar-user-avatar {
+  @include unselectable;
+  display: block;
+  border-radius: 100px;
+  width: 35px;
+  height: 35px;
+  font-weight: bold;
+  line-height: 37px;
+  text-align: center;
+  color: #d2d2d2;
+  background-color: rgb(90, 90, 90);
+
+  &:hover {
+    color: inherit;
+  }
+}
+</style>
+
+

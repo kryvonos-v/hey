@@ -1,6 +1,9 @@
 <template>
   <nav
-    class="navbar is-dark is-transparent app-navbar container"
+    class="
+      navbar container
+      is-dark is-transparent
+      app-navbar use-dropdown-with-tail"
     v-click-outside="closeSearch"
   >
     <div class="navbar-brand app-navbar__brand">
@@ -44,7 +47,7 @@
       <div class="navbar-end">
         <application-search
           v-model="searchActive"
-          class="is-hidden-touch"
+          class="app-navbar__search-on-desktop is-hidden-touch"
         />
 
         <template v-if="!userLoggedIn">
@@ -127,7 +130,7 @@ export default Vue.extend({
 <style lang="scss">
 @import "~bulma/sass/utilities/all";
 
-.app-navbar {
+.use-dropdown-with-tail {
   .dropdown-content {
     position: relative;
 
@@ -143,7 +146,9 @@ export default Vue.extend({
       }
     }
   }
+}
 
+.app-navbar {
   .navbar-item {
     font-weight: bold;
   }
@@ -156,8 +161,10 @@ export default Vue.extend({
     margin: 0 !important;
   }
 
-  &__search-box {
-    background-color: transparent !important;
+  &__search-on-desktop {
+    .dropdown-content:before {
+      right: 14px;
+    }
   }
 
   &__search-input {
@@ -206,25 +213,5 @@ export default Vue.extend({
   .navbar-item {
     color: whitesmoke !important;
   }
-}
-
-.navbar-user-avatar {
-  display: block;
-  border-radius: 100px;
-  width: 35px;
-  height: 35px;
-  font-weight: bold;
-  line-height: 37px;
-  text-align: center;
-  color: #d2d2d2;
-  background-color: rgb(90, 90, 90);
-
-  &:hover {
-    color: inherit;
-  }
-}
-
-.dropdown .background {
-  display: none !important;
 }
 </style>
