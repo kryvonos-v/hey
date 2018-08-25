@@ -151,13 +151,6 @@ export default Vue.extend({
 }
 
 .app-navbar {
-  // &__nav {
-  //   @include desktop {
-  //     margin-left: -0.75rem;
-  //     margin-right: -0.7rem;
-  //   }
-  // }
-
   .navbar-item {
     font-weight: bold;
   }

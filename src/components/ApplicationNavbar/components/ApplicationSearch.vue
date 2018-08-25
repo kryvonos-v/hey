@@ -51,6 +51,7 @@
         v-for="result in searchResults.slice(0, 10)"
         :key="result.id"
         class="app-search__result is-text-overflow"
+        :title="`${result.title} (${getMovieReleaseYear(result)})`"
       >
         <span class="app-search__movie-title">{{ result.title }} </span>
         <span class="app-search__movie-year">({{ getMovieReleaseYear(result) }})</span>
@@ -64,23 +65,26 @@ import Vue, { VNodeDirective } from 'vue'
 import BaseInput from '@/base-components/forms/BaseInput.vue'
 import SearchToggler from './SearchToggler.vue'
 import to from 'await-to-js'
-import { MovieSearchResults, MovieDetails } from '@/types/movie'
+import { MovieResults, MovieDetails } from '@/types/movie'
 
 export default Vue.extend({
   components: {
     BaseInput,
     SearchToggler
   },
+
   model: {
     prop: 'active',
     event: 'active-change'
   },
+
   props: {
     active: {
       type: Boolean,
       default: false
     }
   },
+
   data () {
     return {
       loading: false,
@@ -89,6 +93,7 @@ export default Vue.extend({
       searchError: null
     }
   },
+
   methods: {
     async handleSearchInput (event: any) {
       let query = event.target.value
@@ -99,7 +104,7 @@ export default Vue.extend({
 
         this.loading = false
         this.searchError = error
-        this.searchResults = searchResults as MovieSearchResults
+        this.searchResults = searchResults as MovieResults
           ? searchResults.results
           : []
       } else {
@@ -107,9 +112,11 @@ export default Vue.extend({
         this.searchResults = []
       }
     },
+
     getMovieReleaseYear (movie: MovieDetails): number {
       return Number(movie.releaseDate.split('-')[0])
     },
+
     focusSearchInput (event: MouseEvent): void {
       let searchInput = this.$refs.searchInput as any
 

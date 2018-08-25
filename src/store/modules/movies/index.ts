@@ -8,7 +8,8 @@ import mutations from './mutations'
 import actions from './actions'
 
 const state: MoviesState = {
-  genres: []
+  genresIds: [],
+  genresMap: {}
 }
 
 const genres: Module<MoviesState, RootState> = {
