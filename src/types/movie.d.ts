@@ -9,12 +9,12 @@ export interface MovieBaseDetails {
   posterPath: string | null,
   backdropPath: string | null,
   overview: string | null,
-  releaseDate: string,
+  releaseDate?: string,
   adult: boolean,
-  popularity: number,
+  popularity?: number,
   video: boolean,
-  voteCount: number,
-  voteAverage: number
+  voteCount?: number,
+  voteAverage?: number
 }
 
 export interface MovieGenre extends Genre {}
