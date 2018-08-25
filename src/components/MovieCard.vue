@@ -6,10 +6,21 @@
       <div class="movie-card__background" :style="{ 'background-image': `url(${posterLink})` }"></div>
       <h2 class="title is-5 movie-card__title">{{ movie.title }}</h2>
       <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
+
       <span class="movie-card__divider"></span>
-      <p class="movie-card__description" v-if="false">
-        <span v-for="genre in movieGenres" :key="genre.id">{{ genre.name }} </span>
+      <p class="movie-card__genres">
+        <span
+          v-for="(genre, index) in movieGenres"
+          :key="genre.id"
+        >
+          <a href="#" class="movie-card__genre">{{ genre.name }}</a>
+          <span
+            v-if="index !== movieGenres.length - 1"
+            class="movie-card__genres-divider"
+          > | </span>
+        </span>
       </p>
+      <span class="movie-card__divider"></span>
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
     </div>
   </article>
@@ -20,6 +31,7 @@ import Vue from 'vue'
 import { Genre } from '@/types/genre'
 import { MovieDetails } from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
+import StarIcon from '@/base-components/icons/StarIcon.vue'
 
 const localeDateOptions = {
   year: 'numeric',
@@ -28,6 +40,9 @@ const localeDateOptions = {
 }
 
 export default Vue.extend({
+  components: {
+    StarIcon
+  },
   props: {
     movie: {
       type: Object as () => MovieDetails,
@@ -96,14 +111,34 @@ export default Vue.extend({
   }
 
   &__title[class] {
-    margin-bottom: 0.6rem;
+    margin-bottom: 1rem;
     line-height: 1.3;
     font-weight: 700;
   }
 
   &__release-date {
-    margin-bottom: 1rem;
     font-weight: 500;
+  }
+
+  &__genres {
+    display: inline-block;
+    line-height: 1.35;
+  }
+
+  &__genre {
+    display: inline-block;
+    transition: all 150ms ease-in-out;
+    color: whitesmoke;
+
+    &:hover {
+      color: #d2d2d2;
+      transform: translateY(-2px);
+    }
+  }
+
+  &__genres-divider {
+    display: inline-block;
+    margin: 0 5px;
   }
 
   &__description {
@@ -119,11 +154,10 @@ export default Vue.extend({
 
   &__divider {
     display: block;
-    margin-bottom: 1rem;
-    width: 15px;
-    height: 3px;
-    background-color: whitesmoke;
-    background-color: #963D5A;
+    margin: .6rem 0;
+    width: 25px;
+    height: 2px;
+    background-color: #808080;
   }
 
   &__info-box {
@@ -132,7 +166,7 @@ export default Vue.extend({
     flex-direction: column;
     position: relative;
     z-index: 1;
-    padding: 25px;
+    padding: 20px;
     color: whitesmoke;
 
     &:after {
