@@ -5,10 +5,12 @@
     <div class="movie-card__info-box">
       <div class="movie-card__background" :style="{ 'background-image': `url(${posterLink})` }"></div>
       <h2 class="title is-5 movie-card__title">{{ movie.title }}</h2>
-      <p class="movie-card__release-date">{{ movie.releaseDate }}</p>
-      <p>
+      <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
+      <span class="movie-card__divider"></span>
+      <p class="movie-card__description" v-if="false">
         <span v-for="genre in movieGenres" :key="genre.id">{{ genre.name }} </span>
       </p>
+      <p class="movie-card__description">{{ shortDescrtiption }}</p>
     </div>
   </article>
 </template>
@@ -17,6 +19,13 @@
 import Vue from 'vue'
 import { Genre } from '@/types/genre'
 import { MovieDetails } from '@/types/movie'
+import { truncate } from '@/shared/utils/text'
+
+const localeDateOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}
 
 export default Vue.extend({
   props: {
@@ -40,6 +49,14 @@ export default Vue.extend({
       return this.movie.posterPath
         ? 'https://image.tmdb.org/t/p/w300/' + this.movie.posterPath
         : ''
+    },
+    formattedReleaseDate (): string {
+      return this.movie.releaseDate
+        ? new Date(this.movie.releaseDate).toLocaleString('en-US', localeDateOptions)
+        : ''
+    },
+    shortDescrtiption (): string {
+      return truncate(this.movie.overview || '', 180)
     }
   },
   methods: {
@@ -57,8 +74,8 @@ export default Vue.extend({
   display: flex;
   border-radius: 10px;
   width: 100%;
-  max-width: 550px;
-  height: 280px;
+  max-width: 570px;
+  height: 300px;
   overflow: hidden;
   background-color: #5a5a5a;
 
@@ -78,8 +95,41 @@ export default Vue.extend({
     filter: blur(25px);
   }
 
+  &__title[class] {
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  &__release-date {
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  &__description {
+    flex: auto;
+    display: flex;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    line-height: 1.3;
+    font-size: 14px;
+    letter-spacing: 0.15px;
+  }
+
+  &__divider {
+    display: block;
+    margin-bottom: 1rem;
+    width: 15px;
+    height: 3px;
+    background-color: whitesmoke;
+    background-color: #963D5A;
+  }
+
   &__info-box {
     flex: auto;
+    display: flex;
+    flex-direction: column;
     position: relative;
     z-index: 1;
     padding: 25px;
@@ -93,13 +143,9 @@ export default Vue.extend({
       left: 0;
       right: 0;
       bottom: 0;
-      opacity: 0.8;
+      opacity: 0.86;
       background-color: #5a5a5a;
     }
-  }
-  
-  &__title {
-    margin-bottom: 0.5rem;
   }
 }
 </style>

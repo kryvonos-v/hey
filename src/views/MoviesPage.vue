@@ -1,11 +1,12 @@
 <template>
   <div class="p-movies section">
     <section class="container">
-      <h1 class="title is-1">Movies</h1>
-      <span class="divider" style="margin-bottom: 30px;"></span>
+      <h1 class="title is-1">
+        <span class="title-underline">Movies</span>
+      </h1>
 
-      <div class="columns is-multiline">
-        <div class="column is-half" v-for="movie in popularMovies" :key="movie.id">
+      <div class="columns is-multiline" style="margin-top: 50px">
+        <div class="column is-half is-4-fullhd" v-for="movie in popularMovies" :key="movie.id">
           <movie-card :movie="movie" />
         </div>
       </div>

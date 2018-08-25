@@ -26,7 +26,7 @@ $title-color: whitesmoke !default;
 
 $section-padding: 2rem 1rem !default;
 
-$widescreen: 1050px + (2 * $gap);
+$fullhd: 1490px + (2 * $gap);
 
 $navbar-item-hover-background-color: #4c4b4b !default;
 $navbar-item-color: whitesmoke !default;
@@ -54,6 +54,11 @@ $dropdown-divider-background-color: #808080 !default;
   display: block;
   height: 2px;
   width: 100%;
+}
+
+.title-underline {
+  display: inline-block;
+  border-bottom: 4px solid #963D5A;
 }
 
 html, body {
