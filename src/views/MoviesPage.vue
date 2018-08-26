@@ -5,25 +5,26 @@
         <span class="title-underline">Movies</span>
       </h1>
 
-      <div class="columns is-multiline" style="margin-top: 50px">
+      <movies-pagination
+        class="l-pagination-b"
+        style="margin-top: 50px"
+        :current-page="page"
+        :total-pages="totalPages"
+        route-name="movies-list"
+      />
+
+      <div class="columns is-multiline">
         <div class="column is-12 is-half-desktop is-4-fullhd" v-for="movie in popularMovies" :key="movie.id">
           <movie-card :movie="movie" />
         </div>
       </div>
 
-      <div class="pagination l-pagination">
-        <router-link
-          v-if="previousPageExist"
-          :to="{ name: 'movies-list', query: { page: previousPage } }"
-          class="button is-danger is-rounded pagination__button"
-        >Previous page</router-link>
-
-        <router-link
-          v-if="nextPageExist"
-          :to="{ name: 'movies-list', query: { page: nextPage } }"
-          class="button is-danger is-rounded pagination__button"
-        >Next page</router-link>
-      </div>
+      <movies-pagination
+        class="l-pagination-t"
+        :current-page="page"
+        :total-pages="totalPages"
+        route-name="movies-list"
+      />
     </section>
   </div>
 </template>
@@ -32,11 +33,13 @@
 import Vue from 'vue'
 import to from 'await-to-js'
 import MovieCard from '@/components/MovieCard.vue'
+import MoviesPagination from '@/components/MoviesPagination.vue'
 import { PopularMoviesParams } from '@/types/api'
 
 export default Vue.extend({
   components: {
-    MovieCard
+    MovieCard,
+    MoviesPagination
   },
 
   props: {
@@ -50,21 +53,6 @@ export default Vue.extend({
     return {
       popularMovies: [],
       totalPages: Number.POSITIVE_INFINITY
-    }
-  },
-
-  computed: {
-    previousPage (): number {
-      return this.page - 1
-    },
-    nextPage (): number {
-      return this.page + 1
-    },
-    previousPageExist (): boolean {
-      return this.page > 1
-    },
-    nextPageExist (): boolean {
-      return this.page < this.totalPages
     }
   },
 
@@ -90,12 +78,15 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.pagination {
-  display: flex;
-  justify-content: flex-start;
+.p-movies {
+  padding-bottom: 50px;
+}
 
-  &__button {
-    margin-right: 15px;
-  }
+.l-pagination-t {
+  margin-top: 1.5rem;
+}
+
+.l-pagination-b {
+  margin-bottom: 1.5rem;
 }
 </style>
