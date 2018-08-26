@@ -44,6 +44,8 @@ import { Genre } from '@/types/genre'
 import { MovieDetails } from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
 import HeartIcon from '@/base-components/icons/HeartIcon.vue'
+import uniqWith from 'lodash/uniqWith'
+import isEqual from 'lodash/isEqual'
 
 const localeDateOptions = {
   year: 'numeric',
@@ -70,12 +72,16 @@ export default Vue.extend({
     movieGenresMap (): any {
       return this.$store.state.movies.genresMap
     },
-    movieGenres (): any {
-      return this.movie && this.movie.genreIds
-        ? this.movie.genreIds
+    movieGenres (): Genre[] {
+      let genres: Genre[] = []
+
+      if (this.movie && this.movie.genreIds) {
+        genres = this.movie.genreIds
           .map(genreId => this.getGenre(genreId))
           .filter(genre => genre)
-        : []
+      }
+
+      return uniqWith(genres, isEqual)
     },
     posterLink (): string {
       return this.movie.posterPath
