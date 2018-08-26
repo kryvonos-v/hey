@@ -1,4 +1,8 @@
 <script>
+// This high order component over router link is needed
+// to be able disable router link.
+// See issue on GitHub: https://github.com/vuejs/vue-router/issues/916
+
 // We don't use typescript for this component,
 // because currently Vue + JSX + TypeScript is not yet supported.
 // See issue on GitHub: https://github.com/Microsoft/TypeScript/issues/13260
