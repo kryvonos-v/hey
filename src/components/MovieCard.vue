@@ -1,13 +1,17 @@
 <template>
   <article class="movie-card">
-    <div class="movie-card__poster-box">
-      <div class="movie-card__background is-hidden-tablet" :style="{ 'background-image': `url(${posterLink})` }"></div>
+    <router-link :to="moviePageLink" class="movie-card__poster-box">
+      <div class="movie-card__background is-hidden-tablet" :style="backgroundStyles"></div>
       <img class="movie-card__poster" :src="posterLink" />
-    </div>
+    </router-link>
 
     <div class="movie-card__info-box">
-      <div class="movie-card__background is-hidden-mobile" :style="{ 'background-image': `url(${posterLink})` }"></div>
-      <h2 class="title is-5 movie-card__title">{{ movie.title }}</h2>
+      <div class="movie-card__background is-hidden-mobile" :style="backgroundStyles"></div>
+      <h2 class="title is-5 movie-card__title">
+        <router-link class="link" :to="moviePageLink">
+          {{ movie.title }}
+        </router-link>
+      </h2>
       
       <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
       <p class="movie-card__genres">
@@ -43,7 +47,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Location } from 'vue-router'
 import { Genre } from '@/types/genre'
+import { Dictionary } from '@/types/common'
 import { MovieDetails } from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
 import HeartIcon from '@/base-components/icons/HeartIcon.vue'
@@ -91,6 +97,12 @@ export default Vue.extend({
         ? 'https://image.tmdb.org/t/p/w300/' + this.movie.posterPath
         : ''
     },
+    moviePageLink (): Location {
+      return {
+        name: 'movie-details',
+        params: { movieId: this.movie.id }
+      }
+    },
     formattedReleaseDate (): string {
       return this.movie.releaseDate
         ? new Date(this.movie.releaseDate).toLocaleString('en-US', localeDateOptions)
@@ -98,6 +110,9 @@ export default Vue.extend({
     },
     shortDescrtiption (): string {
       return truncate(this.movie.overview || '', 180)
+    },
+    backgroundStyles (): Dictionary<string> {
+      return { 'background-image': `url(${this.posterLink})` }
     }
   },
   methods: {

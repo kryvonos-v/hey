@@ -1,3 +1,1 @@
-export interface ObjectWithAnyValue {
-  [key: string]: any
-}
+export type Dictionary<T> = { [key: string]: T }
