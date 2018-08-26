@@ -30,9 +30,11 @@ export default new VueRouter({
     },
     {
       path: '/movies/:movieId',
-      name: 'move-details',
+      name: 'movie-details',
       component: MovieDetailsPage,
-      props: true
+      props: route => ({
+        movieId: Number(route.params.movieId)
+      })
     }
   ]
 })
