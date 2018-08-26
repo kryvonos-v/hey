@@ -8,7 +8,7 @@ export const get = {
   // https://developers.themoviedb.org/3/movies/get-popular-movies
   getPopularMovies: () => `/3/movie/popular`,
   // https://developers.themoviedb.org/3/movies/get-movie-details
-  getMovie: (movieId: number) => `/3/movie/${movieId}`,
+  getMovieDetails: (movieId: number) => `/3/movie/${movieId}`,
   // https://developers.themoviedb.org/3/movies/get-movie-recommendations
   getMovieRecommendation: (movieId: number) => `/3/movie/${movieId}/recommendations`
 }

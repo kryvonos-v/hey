@@ -1,10 +1,12 @@
 import {
   MovieSearchParams,
   MovieGenresResponse,
-  PopularMoviesParams
+  PopularMoviesParams,
+  MovieDetailsParams
 } from '@/types/api'
 import {
-  MovieResults
+  MovieResults,
+  MovieExtendedDetails
 } from '@/types/movie'
 
 import * as endpoint from '@/shared/enums/endpoint'
@@ -24,7 +26,7 @@ let axiosMovieDB = axios.create({
 })
 
 export function searchMovie (params: MovieSearchParams): Promise<AxiosResponse<MovieResults>> {
-  return axiosMovieDB.get(endpoint.get.searchMovie(), { params })
+  return axiosMovieDB.get(endpoint.get.searchMovie(), { params: camelCaseKeys(params) })
 }
 
 export function getMovieGenres (): Promise<AxiosResponse<MovieGenresResponse>> {
@@ -32,5 +34,17 @@ export function getMovieGenres (): Promise<AxiosResponse<MovieGenresResponse>> {
 }
 
 export function getPopularMovies (params: PopularMoviesParams = {}): Promise<AxiosResponse<MovieResults>> {
-  return axiosMovieDB.get(endpoint.get.getPopularMovies(), { params })
+  return axiosMovieDB.get(endpoint.get.getPopularMovies(), { params: camelCaseKeys(params) })
+}
+
+export function getMovieDetails (params: MovieDetailsParams): Promise<AxiosResponse<MovieExtendedDetails>> {
+  let { movieId, ...paramsWithoutMovieId } = params
+  paramsWithoutMovieId = camelCaseKeys(paramsWithoutMovieId)
+
+  return axiosMovieDB.get(endpoint.get.getMovieDetails(movieId), {
+    params: {
+      ...paramsWithoutMovieId,
+      append_to_response: 'credits,similar'
+    }
+  })
 }

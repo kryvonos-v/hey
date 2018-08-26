@@ -27,6 +27,9 @@ export interface MovieGenresResponse extends TheMovieDBBaseParams {
 }
 
 export interface MovieDetailsParams extends TheMovieDBBaseParams {
+  // This property doesn't present on original params object for requesting movie details.
+  // We use it just to unify usage of API service.
+  movieId: number,
   appendToResponse?: string
 }
 
