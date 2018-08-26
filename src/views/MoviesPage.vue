@@ -6,7 +6,7 @@
       </h1>
 
       <div class="columns is-multiline" style="margin-top: 50px">
-        <div class="column is-half is-4-fullhd" v-for="movie in popularMovies" :key="movie.id">
+        <div class="column is-12 is-half-desktop is-4-fullhd" v-for="movie in popularMovies" :key="movie.id">
           <movie-card :movie="movie" />
         </div>
       </div>

@@ -1,9 +1,12 @@
 <template>
   <article class="movie-card">
-    <img class="movie-card__poster" :src="posterLink" />
+    <div class="movie-card__poster-box">
+      <div class="movie-card__background is-hidden-tablet" :style="{ 'background-image': `url(${posterLink})` }"></div>
+      <img class="movie-card__poster" :src="posterLink" />
+    </div>
 
     <div class="movie-card__info-box">
-      <div class="movie-card__background" :style="{ 'background-image': `url(${posterLink})` }"></div>
+      <div class="movie-card__background is-hidden-mobile" :style="{ 'background-image': `url(${posterLink})` }"></div>
       <h2 class="title is-5 movie-card__title">{{ movie.title }}</h2>
       
       <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
@@ -23,7 +26,7 @@
       <span class="movie-card__divider"></span>
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
       
-      <footer>
+      <footer class="movie-card__footer">
         <heart-icon
           class="movie-card__icon"
           :active="favorite"
@@ -112,32 +115,64 @@ export default Vue.extend({
   display: flex;
   border-radius: 10px;
   width: 100%;
-  max-width: 570px;
-  height: 300px;
   overflow: hidden;
   background-color: #5a5a5a;
 
-  &__poster {
+  @include mobile {
+    flex-direction: column;
+  }
+
+  @include tablet {
+    height: 350px;
+  }
+
+  @include desktop {
+    height: 300px;
+  }
+
+  &__poster-box {
     @include unselectable;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  &__poster {
+    position: relative;
+    z-index: 10;
     height: 100%;
   }
 
   &__background {
     position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    z-index: 0;
+    top: -5px;
+    left: -13px;
+    right: -13px;
+    bottom: -5px;
     background-size: cover;
-    opacity: 1;
-    filter: blur(25px);
+    opacity: 0.8;
+    filter: blur(4px);
+
+    @include tablet {
+      z-index: -1;
+      filter: blur(25px);
+    }
   }
 
   &__title[class] {
     margin-bottom: 1rem;
     line-height: 1.3;
     font-weight: 700;
+
+    @include desktop-only {
+      font-size: 1rem;
+    }
   }
 
   &__release-date {
@@ -185,6 +220,10 @@ export default Vue.extend({
     width: 25px;
     height: 2px;
     background-color: #808080;
+  }
+
+  &__footer {
+    margin-top: 1rem;
   }
 
   &__icon {
