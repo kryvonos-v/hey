@@ -6,6 +6,10 @@
       :disabled="!previousPageExist"
     >Previous page</custom-router-link>
 
+    <span class="pagination-results-info">
+      Page <span class="title is-4">{{ currentPage }}</span> out of <span class="title is-4">{{ totalPagesToDisplay }}</span>
+    </span>
+
     <custom-router-link
       v-if="nextPageExist"
       :to="{ name: routeName, query: { page: nextPage } }"
@@ -29,6 +33,10 @@ export default Vue.extend({
     totalPages: {
       type: Number,
       required: true
+    },
+    showPagesStats: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -43,11 +51,32 @@ export default Vue.extend({
     },
     nextPageExist (): boolean {
       return this.currentPage < this.totalPages
+    },
+    totalPagesToDisplay (): string | number {
+      return this.totalPages === Number.POSITIVE_INFINITY
+        ? '∞'
+        : this.totalPages
     }
   }
 })
 </script>
 
 <style lang="scss">
+@import '~bulma/sass/utilities/all';
 
+.pagination-results-info {
+  order: 2;
+  color: #959595;
+
+  @include mobile {
+    margin-top: 0.75rem;
+    width: 100%;
+    flex: none;
+  }
+
+  .title {
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
 </style>
