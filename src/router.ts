@@ -9,13 +9,24 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: MoviesPage
+      redirect: '/movies'
     },
     {
       path: '/movies',
       name: 'movies-list',
-      component: MoviesPage
+      component: MoviesPage,
+      beforeEnter (to, from, next) {
+        if (Number(to.query.page) < 1) {
+          next({ name: 'movies-list', query: { page: '1' } })
+        } else {
+          next()
+        }
+      },
+      props: route => {
+        return {
+          page: Number(route.query.page || 1)
+        }
+      }
     },
     {
       path: '/movies/:movieId',
