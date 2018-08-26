@@ -5,9 +5,8 @@
     <div class="movie-card__info-box">
       <div class="movie-card__background" :style="{ 'background-image': `url(${posterLink})` }"></div>
       <h2 class="title is-5 movie-card__title">{{ movie.title }}</h2>
+      
       <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
-
-      <span class="movie-card__divider"></span>
       <p class="movie-card__genres">
         <span
           v-for="(genre, index) in movieGenres"
@@ -20,8 +19,21 @@
           > | </span>
         </span>
       </p>
+
       <span class="movie-card__divider"></span>
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
+      
+      <footer>
+        <heart-icon
+          class="movie-card__icon"
+          :active="favorite"
+          :title="favorite
+            ? 'Add to favorites'
+            : 'Remove from favorites'
+          "
+          @click="favorite = !favorite"
+        />
+      </footer>
     </div>
   </article>
 </template>
@@ -31,7 +43,7 @@ import Vue from 'vue'
 import { Genre } from '@/types/genre'
 import { MovieDetails } from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
-import StarIcon from '@/base-components/icons/StarIcon.vue'
+import HeartIcon from '@/base-components/icons/HeartIcon.vue'
 
 const localeDateOptions = {
   year: 'numeric',
@@ -41,12 +53,17 @@ const localeDateOptions = {
 
 export default Vue.extend({
   components: {
-    StarIcon
+    HeartIcon
   },
   props: {
     movie: {
       type: Object as () => MovieDetails,
       required: true
+    }
+  },
+  data () {
+    return {
+      favorite: false
     }
   },
   computed: {
@@ -95,6 +112,7 @@ export default Vue.extend({
   background-color: #5a5a5a;
 
   &__poster {
+    @include unselectable;
     height: 100%;
   }
 
@@ -117,11 +135,14 @@ export default Vue.extend({
   }
 
   &__release-date {
+    margin-bottom: 0.5rem;
+    font-size: 14px;
     font-weight: 500;
   }
 
   &__genres {
     display: inline-block;
+    font-size: 14px;
     line-height: 1.35;
   }
 
@@ -158,6 +179,10 @@ export default Vue.extend({
     width: 25px;
     height: 2px;
     background-color: #808080;
+  }
+
+  &__icon {
+    cursor: pointer;
   }
 
   &__info-box {
