@@ -17,6 +17,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$primary: #963D5A;
+$link: #5a5a5a;
+
 @import "~bulma/sass/utilities/all";
 
 // Overriding of Bulma variables.
@@ -25,13 +28,16 @@ $family-sans-serif: 'Arial', sans-serif;
 $title-color: whitesmoke !default;
 
 $section-padding: 2rem 1rem !default;
-
 $fullhd: 1490px + (2 * $gap);
 
 $navbar-item-hover-background-color: #4c4b4b !default;
 $navbar-item-color: whitesmoke !default;
 $navbar-dropdown-background-color: rgb(90, 90, 90) !default;
 $navbar-divider-background-color: #808080 !default;
+
+$button-border-radius: 7px;
+$pagination-disabled-color: whitesmoke;
+$pagination-disabled-background-color: #4d4d4d;
 
 $dropdown-content-background-color: rgb(90, 90, 90) !default;
 $dropdown-item-color: whitesmoke !default;
@@ -59,6 +65,32 @@ $dropdown-divider-background-color: #808080 !default;
 .title-underline {
   display: inline-block;
   border-bottom: 4px solid #963D5A;
+}
+
+.button {
+  border-radius: $button-border-radius;
+}
+
+.pagination-next,
+.pagination-previous,
+.pagination-link {
+  border: 0;
+  color: whitesmoke;
+  background-color: #5a5a5a;
+}
+
+.pagination {
+  .pagination-next,
+  .pagination-previous {
+    padding-left: $button-padding-horizontal;
+    padding-right: $button-padding-horizontal;
+    border-radius: $button-border-radius;
+    
+    &:hover {
+      color: whitesmoke;
+      background-color: darken(#5a5a5a, 5%);  
+    }
+  }
 }
 
 html, body {
