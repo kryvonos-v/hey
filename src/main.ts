@@ -6,15 +6,15 @@ import './styles/main.scss'
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem.vue'
 import clickOutside from './shared/directives/click-outside'
 import Dropdown from './components/Dropdown/Dropdown.vue'
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import CustomRouterLink from './base-components/CustomRouterLink.vue'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.directive('click-outside', clickOutside)
 Vue.component('b-dropdown', Dropdown)
 Vue.component(DropdownItem.name, DropdownItem)
+Vue.component('custom-router-link', CustomRouterLink)
 
 Vue.config.productionTip = false
 
