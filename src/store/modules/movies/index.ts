@@ -6,9 +6,10 @@ import { Module } from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
+import store from 'store'
 
 const state: MoviesState = {
-  favoriteMoviesIds: [],
+  favoriteMoviesIds: store.get('favoriteMoviesIds') || [],
   genresIds: [],
   genresMap: {}
 }
