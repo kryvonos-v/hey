@@ -9,7 +9,7 @@
       <span class="movie-rating__rating-box">
         <span class="title is-4 movie-rating__rating">{{ rating }}</span><span>/10</span>
       </span>
-      <span class="movie-rating__total-votes">{{ votesCount }}</span>
+      <span class="movie-rating__total-votes">{{ votesCount | number({ decimals: 3, divider: ' ' }) }}</span>
     </div>
   </div>
 </template>
