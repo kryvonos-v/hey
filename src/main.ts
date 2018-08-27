@@ -8,6 +8,7 @@ import clickOutside from './shared/directives/click-outside'
 import Dropdown from './components/Dropdown/Dropdown.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import CustomRouterLink from './base-components/CustomRouterLink.vue'
+import registerGlobalFilters from './register-global-filters'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -15,6 +16,8 @@ Vue.directive('click-outside', clickOutside)
 Vue.component('b-dropdown', Dropdown)
 Vue.component(DropdownItem.name, DropdownItem)
 Vue.component('custom-router-link', CustomRouterLink)
+
+registerGlobalFilters(Vue)
 
 Vue.config.productionTip = false
 
