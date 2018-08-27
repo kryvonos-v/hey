@@ -1,5 +1,6 @@
 <template>
   <heart-icon
+    v-bind="$attrs"
     class="favorite-movie-btn"
     :active="active"
     :title="active
