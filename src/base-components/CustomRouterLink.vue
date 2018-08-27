@@ -6,7 +6,7 @@
 // We don't use typescript for this component,
 // because currently Vue + JSX + TypeScript is not yet supported.
 // See issue on GitHub: https://github.com/Microsoft/TypeScript/issues/13260
-import Vue, { VNode } from 'vue'
+import Vue from 'vue'
 
 const RouterLink = 'router-link'
 

@@ -1,6 +1,6 @@
 <template>
   <article class="p-movie-details">
-    <section class="movie-hero movie-hero--under-site-header hero">
+    <section class="movie-hero movie-hero--under-site-header hero" v-if="this.movie.id">
       <div class="movie-hero__background-image" :style="{ 'background-image': `url(${backdropLink})` }"></div>
 
       <div class="hero-body">
@@ -17,12 +17,15 @@
             </div>
             <div class="column is-8">
               <div class="movie-hero__rating-and-actions">
-                <movie-rating :rating="5.2" :votes-count="1837" />
+                <movie-rating
+                  :rating="movie.voteAverage"
+                  :votes-count="movie.voteCount"
+                />
                 <favorite-movie-button
                   size="large"
                   color="light"
                   class="movie-hero__action"
-                  :movie-id="movie.id || 0"
+                  :movie-id="movieId"
                 />
               </div>
             </div>
