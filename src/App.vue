@@ -71,6 +71,15 @@ $dropdown-divider-background-color: #808080 !default;
   border-radius: $button-border-radius;
 }
 
+.link {
+  transition: color 150ms ease-in-out;
+  color: whitesmoke;
+
+  &:hover {
+    color: #cacaca;
+  }
+}
+
 .pagination-next,
 .pagination-previous,
 .pagination-link {

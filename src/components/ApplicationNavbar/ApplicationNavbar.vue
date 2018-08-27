@@ -151,6 +151,8 @@ export default Vue.extend({
 }
 
 .app-navbar {
+  background-color: transparent !important;
+
   .navbar-item {
     font-weight: bold;
   }

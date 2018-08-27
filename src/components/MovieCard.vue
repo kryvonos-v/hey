@@ -31,15 +31,7 @@
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
       
       <footer class="movie-card__footer">
-        <heart-icon
-          class="movie-card__icon"
-          :active="favorite"
-          :title="favorite
-            ? 'Add to favorites'
-            : 'Remove from favorites'
-          "
-          @click="favorite = !favorite"
-        />
+        <favorite-movie-button :movie-id="movie.id" />
       </footer>
     </div>
   </article>
@@ -52,9 +44,9 @@ import { Genre } from '@/types/genre'
 import { Dictionary } from '@/types/common'
 import { MovieDetails } from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
-import HeartIcon from '@/base-components/icons/HeartIcon.vue'
 import uniqWith from 'lodash/uniqWith'
 import isEqual from 'lodash/isEqual'
+import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
 
 const localeDateOptions = {
   year: 'numeric',
@@ -64,19 +56,16 @@ const localeDateOptions = {
 
 export default Vue.extend({
   components: {
-    HeartIcon
+    FavoriteMovieButton
   },
+
   props: {
     movie: {
       type: Object as () => MovieDetails,
       required: true
     }
   },
-  data () {
-    return {
-      favorite: false
-    }
-  },
+
   computed: {
     movieGenresMap (): any {
       return this.$store.state.movies.genresMap
@@ -115,6 +104,7 @@ export default Vue.extend({
       return { 'background-image': `url(${this.posterLink})` }
     }
   },
+
   methods: {
     getGenre (genreId: number): Genre {
       return this.movieGenresMap[genreId]
@@ -239,10 +229,6 @@ export default Vue.extend({
 
   &__footer {
     margin-top: 1rem;
-  }
-
-  &__icon {
-    cursor: pointer;
   }
 
   &__info-box {
