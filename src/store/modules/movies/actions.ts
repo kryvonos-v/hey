@@ -55,6 +55,13 @@ const actions: ActionTree<MoviesState, RootState> = {
     }
   },
 
+  selectFavoriteMovie: {
+    root: true,
+    handler ({ commit }, payload) {
+      commit('SELECT_FAVORITE_MOVIE', payload)
+    }
+  },
+
   searchMovie: {
     root: true,
     async handler (context, params: MovieSearchParams) {

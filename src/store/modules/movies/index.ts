@@ -8,6 +8,7 @@ import mutations from './mutations'
 import actions from './actions'
 
 const state: MoviesState = {
+  favoriteMoviesIds: [],
   genresIds: [],
   genresMap: {}
 }

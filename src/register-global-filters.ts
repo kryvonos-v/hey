@@ -6,7 +6,7 @@ function prefixedWithZero (value: number | string): string {
     : '' + value
 }
 
-function number (number: number | string, { decimals = 4, divider = ' ' } = {}): string {
+function number (number: number | string, { decimals = 3, divider = ' ' } = {}): string {
   let numberParts = []
   let numberAsString = number.toString()
 

@@ -2,10 +2,12 @@ import {
   MovieGenre,
   MovieDetails
 } from '@/types/movie'
+import { Dictionary } from '@/types/common'
 
 export interface RootState {}
 
 export interface MoviesState {
-  genresMap: { [key: string]: MovieGenre },
+  favoriteMoviesIds: number[],
+  genresMap: Dictionary<MovieGenre>,
   genresIds: number[]
 }
