@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MoviesPage from '@/views/MoviesPage.vue'
-import MovieDetailsPage from '@/views/MovieDetailsPage.vue'
+import MovieDetailsPage from '@/views/MovieDetailsPage/MovieDetailsPage.vue'
 
 Vue.use(VueRouter)
 

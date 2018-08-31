@@ -28,6 +28,26 @@
                   :movie-id="movieId"
                 />
               </div>
+
+              <section class="movie-info-section">
+                <movie-info-line category="Genres" :info="movieGenresInfo">
+                  <movie-info-line-link
+                    v-for="genre in movie.genres"
+                    :key="genre.id"
+                    to="/"
+                  >{{ genre.name }}</movie-info-line-link>
+                </movie-info-line>
+                <movie-info-line category="Countries" :info="productionCountriesNames | noInfo" />
+                <movie-info-line category="Runtime" :info="runtime | noInfo" />
+                <movie-info-line category="Budget" :info="getFormattedMoneyAmount(movie.budget) | noInfo" />
+                <movie-info-line category="Revenu" :info="getFormattedMoneyAmount(movie.revenue) | noInfo" />
+              </section>
+
+              <h2 class="title is-5 movie-hero__section-title">Crew</h2>
+              <p class="movie-hero__overview">{{ movie.overview }}</p>
+
+              <h2 class="title is-5 movie-hero__section-title">Overview</h2>
+              <p class="movie-hero__overview">{{ movie.overview }}</p>
             </div>
           </div>
         </div>
@@ -39,34 +59,64 @@
 <script lang="ts">
 import Vue from 'vue'
 import to from 'await-to-js'
-import { MovieExtendedDetails } from '@/types/movie'
+import {
+  MovieExtendedDetails,
+  MovieGenre,
+  MovieProductionCountry
+} from '@/types/movie'
 import { AxiosError } from 'axios'
+import { number } from '@/shared/utils/text'
 import MovieRating from '@/base-components/MovieRating.vue'
 import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
+import MovieInfoLine from './MovieInfoLine.vue'
+import MovieInfoLineLink from './MovieInfoLineLink.vue'
 
 interface MovieDetailsPage {
   movie: MovieExtendedDetails | any,
   error: AxiosError | null
 }
 
+const NO_INFO_TEXT = 'no info'
+
 export default Vue.extend({
   components: {
     FavoriteMovieButton,
-    MovieRating
+    MovieRating,
+    MovieInfoLine,
+    MovieInfoLineLink
   },
+
+  filters: {
+    noInfo (value: any): any {
+      return (
+        !value || value === '$0' ||
+        (Array.isArray(value) && !value.length)
+      )
+        ? NO_INFO_TEXT
+        : value
+    }
+  },
+
   props: {
     movieId: {
       type: Number,
       required: true
     }
   },
+
   data () {
     return {
       movie: {},
       error: null
     } as MovieDetailsPage
   },
+
   computed: {
+    movieGenresInfo (): string {
+      return this.movie.genres && this.movie.genres.length
+        ? ''
+        : NO_INFO_TEXT
+    },
     posterLink (): string {
       return this.movie.posterPath
         ? 'https://image.tmdb.org/t/p/w342/' + this.movie.posterPath
@@ -81,13 +131,30 @@ export default Vue.extend({
       return this.movie.releaseDate
         ? this.movie.releaseDate.split('-')[0]
         : ''
+    },
+    runtime (): string {
+      return this.movie.runtime
+        ? this.movie.runtime + ' min'
+        : ''
+    },
+    productionCountriesNames (): string[] {
+      return this.movie.productionCountries
+        ? this.movie.productionCountries.map((country: MovieGenre) => country.name)
+        : []
     }
   },
+
   async created () {
     const [error, movieDetails] = await to(this.$store.dispatch('getMovieDetails', { movieId: this.movieId }))
 
     if (error) this.error = error
     if (movieDetails) this.movie = movieDetails
+  },
+
+  methods: {
+    getFormattedMoneyAmount (value: string | number) {
+      return '$' + number(value, { decimals: 3, divider: ' ' })
+    }
   }
 })
 </script>
@@ -96,6 +163,7 @@ export default Vue.extend({
 .movie-hero {
   position: relative;
   overflow: hidden;
+  color: whitesmoke;
 
   &--under-site-header {
     margin-top: -3.2rem;
@@ -130,10 +198,22 @@ export default Vue.extend({
   &__rating-and-actions {
     display: flex;
     align-items: center;
+    margin-bottom: 1.5rem;
   }
   
   &__action {
     margin-left: 20px
+  }
+
+  // We use [class] to increase specifity of selector.
+  &__section-title[class] {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__overview {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.4;
   }
 
   &__background-image {
@@ -157,7 +237,31 @@ export default Vue.extend({
     right: 0;
     bottom: 0;
     background-color: #363636;
-    opacity: 0.8;
+    background-color: #0B3C49;
+    background-color: #010103;
+    background-color: #181819;
+    background-color: #2D2D2D;
+    opacity: 0.97;
+  }
+}
+
+.movie-info-section {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.movie-info-line {
+  display: flex;
+  align-items: center;
+  padding: .45rem 0;
+  font-weight: 500;
+  color: whitesmoke;
+  border-bottom: 1px solid rgba(90, 90, 90, 0.18);
+
+  &__category {
+    width: 150px;
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 </style>

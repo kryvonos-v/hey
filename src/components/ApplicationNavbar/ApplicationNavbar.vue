@@ -97,7 +97,7 @@ export default Vue.extend({
       searchActive: false,
       showMobileMenu: false,
       showUserMenu: false,
-      userLoggedIn: true
+      userLoggedIn: false
     }
   },
   watch: {

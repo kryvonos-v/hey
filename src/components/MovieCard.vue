@@ -42,7 +42,10 @@ import Vue from 'vue'
 import { Location } from 'vue-router'
 import { Genre } from '@/types/genre'
 import { Dictionary } from '@/types/common'
-import { MovieDetails } from '@/types/movie'
+import {
+  MovieDetails,
+  MovieGenre
+} from '@/types/movie'
 import { truncate } from '@/shared/utils/text'
 import uniqWith from 'lodash/uniqWith'
 import isEqual from 'lodash/isEqual'
@@ -67,7 +70,7 @@ export default Vue.extend({
   },
 
   computed: {
-    movieGenresMap (): any {
+    movieGenresMap (): Dictionary<MovieGenre> {
       return this.$store.state.movies.genresMap
     },
     movieGenres (): Genre[] {

@@ -28,12 +28,12 @@ export interface MovieProductionCompany {
 
 export interface MovieProductionCountry {
   name: string,
-  iso3166_1: string
+  iso31661: string
 }
 
 export interface MovieSpokenLanguage {
   name: string,
-  iso639_1: string
+  iso6391: string
 }
 
 export interface MovieGenre extends Genre {}

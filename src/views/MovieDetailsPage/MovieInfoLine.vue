@@ -9,7 +9,7 @@
           :class="tagCssClass"
         >{{ tag }}</span>
       </template>
-      <slot v-else />
+      <slot v-else-if="$slots.default" />
     </div>
   </div>
 </template>
