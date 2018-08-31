@@ -1,5 +1,10 @@
 <template>
-  <div class="movie-rating">
+  <div
+    :class="{
+      'movie-rating': true,
+      'movie-rating--no-info': !ratingExist
+    }"
+  >
     <font-awesome-icon
       :icon="starIcon"
       size="2x"
@@ -7,9 +12,18 @@
     />
     <div class="movie-rating__info-box">
       <span class="movie-rating__rating-box">
-        <span class="title is-4 movie-rating__rating">{{ rating }}</span><span>/10</span>
+        <span
+          class="title movie-rating__rating"
+          :class="ratingExist
+            ? 'is-4'
+            : 'is-6' 
+          "
+        >{{ rating || 'No rating' }}</span>
+        <span v-if="ratingExist">/10</span>
       </span>
-      <span class="movie-rating__total-votes">{{ votesCount | number({ decimals: 3, divider: ' ' }) }}</span>
+      <span class="movie-rating__total-votes" v-if="ratingExist">
+        {{ votesCount | number({ decimals: 3, divider: ' ' }) }}
+      </span>
     </div>
   </div>
 </template>
@@ -33,6 +47,11 @@ export default Vue.extend({
       type: Number,
       required: true
     }
+  },
+  computed: {
+    ratingExist (): boolean {
+      return !!this.rating
+    }
   }
 })
 </script>
@@ -45,6 +64,10 @@ export default Vue.extend({
   &__icon {
     margin-right: .5rem;
     color: gold;
+
+    @at-root .movie-rating--no-info & {
+      color: #b1b0b0;
+    }
   }
 
   &__info-box {

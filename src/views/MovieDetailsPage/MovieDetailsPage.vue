@@ -66,6 +66,7 @@ import {
 } from '@/types/movie'
 import { AxiosError } from 'axios'
 import { number } from '@/shared/utils/text'
+import * as Text from '@/shared/enums/text'
 import MovieRating from '@/base-components/MovieRating.vue'
 import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
 import MovieInfoLine from './MovieInfoLine.vue'
@@ -76,25 +77,12 @@ interface MovieDetailsPage {
   error: AxiosError | null
 }
 
-const NO_INFO_TEXT = 'no info'
-
 export default Vue.extend({
   components: {
     FavoriteMovieButton,
     MovieRating,
     MovieInfoLine,
     MovieInfoLineLink
-  },
-
-  filters: {
-    noInfo (value: any): any {
-      return (
-        !value || value === '$0' ||
-        (Array.isArray(value) && !value.length)
-      )
-        ? NO_INFO_TEXT
-        : value
-    }
   },
 
   props: {
@@ -115,7 +103,7 @@ export default Vue.extend({
     movieGenresInfo (): string {
       return this.movie.genres && this.movie.genres.length
         ? ''
-        : NO_INFO_TEXT
+        : Text.NO_INFO
     },
     posterLink (): string {
       return this.movie.posterPath
