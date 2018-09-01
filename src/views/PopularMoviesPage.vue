@@ -1,45 +1,24 @@
 <template>
-  <div class="p-movies section">
-    <section class="container">
-      <h1 class="title is-1">
-        <span class="title-underline">Movies</span>
-      </h1>
-
-      <movies-pagination
-        class="l-pagination-b"
-        style="margin-top: 50px"
-        :current-page="page"
-        :total-pages="totalPages"
-        route-name="movies-list"
-      />
-
-      <div class="columns is-multiline">
-        <div class="column is-12 is-half-desktop is-4-fullhd" v-for="movie in popularMovies" :key="movie.id">
-          <movie-card :movie="movie" />
-        </div>
-      </div>
-
-      <movies-pagination
-        class="l-pagination-t"
-        :current-page="page"
-        :total-pages="totalPages"
-        route-name="movies-list"
-      />
-    </section>
-  </div>
+  <movies-results-page
+    :results="popularMovies"
+    :page="page"
+    :total-pages="totalPages"
+  >
+    <h1 class="title is-1 l-movies-results-header" slot="header">
+      <span class="title-underline">Movies</span>
+    </h1>
+  </movies-results-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import to from 'await-to-js'
-import MovieCard from '@/components/MovieCard.vue'
-import MoviesPagination from '@/components/MoviesPagination.vue'
 import { PopularMoviesParams } from '@/types/api'
+import MoviesResultsPage from './MoviesResultsPage.vue'
 
 export default Vue.extend({
   components: {
-    MovieCard,
-    MoviesPagination
+    MoviesResultsPage
   },
 
   props: {
