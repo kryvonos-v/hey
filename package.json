@@ -19,6 +19,7 @@
     "camelcase-keys": "^4.2.0",
     "lodash": "^4.17.10",
     "normalizr": "^3.2.4",
+    "snakecase-keys": "^1.2.0",
     "store": "^2.0.12",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
