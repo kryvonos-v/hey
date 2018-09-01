@@ -61,6 +61,22 @@
         </div>
       </div>
     </section>
+
+    <section class="movie-cast section">
+      <div class="container">
+        <h2 class="title is-2"><span class="title-underline">Cast</span></h2>
+
+        <div class="columns movie-cast__list is-mobile">
+          <div
+            v-for="actor in featuredCast"
+            :key="actor.id"
+            class="column movie-cast__item"
+          >
+            <actor-card :actor="actor" />
+          </div>
+        </div>
+      </div>
+    </section>
   </article>
 </template>
 
@@ -79,6 +95,7 @@ import MovieRating from '@/base-components/MovieRating.vue'
 import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
 import MovieInfoLine from './MovieInfoLine.vue'
 import MovieInfoLineLink from './MovieInfoLineLink.vue'
+import ActorCard from '@/components/ActorCard.vue'
 
 interface MovieDetailsPage {
   movie: MovieExtendedDetails | any,
@@ -90,7 +107,8 @@ export default Vue.extend({
     FavoriteMovieButton,
     MovieRating,
     MovieInfoLine,
-    MovieInfoLineLink
+    MovieInfoLineLink,
+    ActorCard
   },
 
   props: {
@@ -144,6 +162,9 @@ export default Vue.extend({
       } catch (e) {
         return []
       }
+    },
+    featuredCast (): any[] {
+      return this.movie.credits.cast.slice(0, 20)
     }
   },
 
@@ -251,6 +272,16 @@ export default Vue.extend({
     background-color: #181819;
     background-color: #2D2D2D;
     opacity: 0.97;
+  }
+}
+
+.movie-cast {
+  &__list {
+    overflow: auto;
+  }
+
+  &__item {
+    flex: none;
   }
 }
 

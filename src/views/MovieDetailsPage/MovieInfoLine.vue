@@ -59,6 +59,7 @@ export default Vue.extend({
 
   &__category {
     width: 180px;
+    flex: none;
     font-size: 14px;
     font-weight: 500;
   }
