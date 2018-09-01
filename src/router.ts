@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MoviesPage from '@/views/MoviesPage.vue'
+import PopularMoviesPage from '@/views/PopularMoviesPage.vue'
 import MovieDetailsPage from '@/views/MovieDetailsPage/MovieDetailsPage.vue'
 
 Vue.use(VueRouter)
@@ -14,10 +14,13 @@ export default new VueRouter({
     {
       path: '/movies',
       name: 'movies-list',
-      component: MoviesPage,
+      component: PopularMoviesPage,
       beforeEnter (to, from, next) {
         if (Number(to.query.page) < 1) {
-          next({ name: 'movies-list', query: { page: '1' } })
+          next({
+            name: 'movies-list',
+            query: { page: '1' }
+          })
         } else {
           next()
         }
