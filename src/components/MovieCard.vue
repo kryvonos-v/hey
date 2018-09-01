@@ -19,7 +19,10 @@
           v-for="(genre, index) in movieGenres"
           :key="genre.id"
         >
-          <a href="#" class="movie-card__genre">{{ genre.name }}</a>
+          <router-link
+            :to="getGenreLink(genre)"
+            class="movie-card__genre"
+          >{{ genre.name }}</router-link>
           <span
             v-if="index !== movieGenres.length - 1"
             class="movie-card__genres-divider"
@@ -49,6 +52,7 @@ import {
 import { truncate } from '@/shared/utils/text'
 import uniqWith from 'lodash/uniqWith'
 import isEqual from 'lodash/isEqual'
+import union from 'lodash/union'
 import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
 
 const localeDateOptions = {
@@ -111,6 +115,20 @@ export default Vue.extend({
   methods: {
     getGenre (genreId: number): Genre {
       return this.movieGenresMap[genreId]
+    },
+
+    getGenreLink (genre: Genre): Location {
+      let withGenres: string[] = [String(genre.id)]
+
+      if (this.$route.name === 'movies-search') {
+        let alreadyDefinedGenres = (this.$route.query.withGenres || '').split(',')
+        withGenres = union(withGenres, alreadyDefinedGenres)
+      }
+
+      return {
+        name: 'movies-search',
+        query: { withGenres: withGenres.join(',') }
+      }
     }
   }
 })
