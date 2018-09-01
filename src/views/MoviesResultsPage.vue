@@ -7,7 +7,7 @@
         class="l-pagination-b"
         :current-page="page"
         :total-pages="totalPages"
-        route-name="movies-list"
+        :route-name="paginationRouteName"
       />
 
       <div class="columns is-multiline">
@@ -24,7 +24,7 @@
         class="l-pagination-t"
         :current-page="page"
         :total-pages="totalPages"
-        route-name="movies-list"
+        :route-name="paginationRouteName"
       />
 
       <slot name="footer" />
@@ -56,6 +56,10 @@ export default Vue.extend({
     totalPages: {
       type: Number,
       default: Number.POSITIVE_INFINITY
+    },
+    paginationRouteName: {
+      type: String,
+      required: true
     }
   }
 })

@@ -3,6 +3,7 @@
     :results="filteredMovies"
     :page="page"
     :total-pages="totalPages"
+    pagination-route-name="movies-search"
   >
     <h1 class="title is-1 l-movies-results-header" slot="header">
       <span class="title-underline">Movies search</span>

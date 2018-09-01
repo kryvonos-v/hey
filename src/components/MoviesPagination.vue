@@ -11,9 +11,9 @@
     </span>
 
     <custom-router-link
-      v-if="nextPageExist"
       :to="{ name: routeName, query: nextPageQuery }"
       class="pagination-next"
+      :disabled="!nextPageExist"
     >Next page</custom-router-link>
   </div>
 </template>

@@ -3,6 +3,7 @@
     :results="popularMovies"
     :page="page"
     :total-pages="totalPages"
+    pagination-route-name="movies-list"
   >
     <h1 class="title is-1 l-movies-results-header" slot="header">
       <span class="title-underline">Popular movies</span>
