@@ -2,7 +2,7 @@
   <div class="movie-info-line">
     <div class="movie-info-line__category">{{ category }}</div>
     <div class="movie-info-line__info tags">
-      <template v-if="info">
+      <template v-if="info && tags.length">
         <span
           v-for="tag in tags"
           :key="tag"
@@ -10,6 +10,7 @@
         >{{ tag }}</span>
       </template>
       <slot v-else-if="$slots.default" />
+      <span v-else :class="tagCssClass">{{ noInfoText }}</span>
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@
 import Vue from 'vue'
 import { Location } from 'vue-router'
 import { tagCssClass } from './movie-info-line-shared'
+import * as Text from '@/shared/enums/text'
 
 export default Vue.extend({
   props: {
@@ -32,7 +34,8 @@ export default Vue.extend({
   },
   data () {
     return {
-      tagCssClass
+      tagCssClass,
+      noInfoText: Text.NO_INFO
     }
   },
   computed: {
@@ -49,13 +52,13 @@ export default Vue.extend({
 .movie-info-line {
   display: flex;
   align-items: center;
-  padding: .45rem 0;
+  padding: .4rem 0;
   font-weight: 500;
   color: whitesmoke;
   border-bottom: 1px solid rgba(90, 90, 90, 0.18);
 
   &__category {
-    width: 150px;
+    width: 180px;
     font-size: 14px;
     font-weight: 500;
   }

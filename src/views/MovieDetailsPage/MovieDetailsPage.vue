@@ -29,22 +29,30 @@
                 />
               </div>
 
-              <section class="movie-info-section">
-                <movie-info-line category="Genres" :info="movieGenresInfo">
-                  <movie-info-line-link
-                    v-for="genre in movie.genres"
-                    :key="genre.id"
-                    to="/"
-                  >{{ genre.name }}</movie-info-line-link>
-                </movie-info-line>
-                <movie-info-line category="Countries" :info="productionCountriesNames | noInfo" />
-                <movie-info-line category="Runtime" :info="runtime | noInfo" />
-                <movie-info-line category="Budget" :info="getFormattedMoneyAmount(movie.budget) | noInfo" />
-                <movie-info-line category="Revenu" :info="getFormattedMoneyAmount(movie.revenue) | noInfo" />
-              </section>
+              <div>
+                <section class="movie-info-section">
+                  <h2 class="is-hidden">General Info</h2>
+                  <movie-info-line category="Genres">
+                    <movie-info-line-link
+                      v-for="genre in movie.genres"
+                      :key="genre.id"
+                      to="/"
+                    >{{ genre.name }}</movie-info-line-link>
+                  </movie-info-line>
+                  <movie-info-line category="Countries" :info="productionCountriesNames" />
+                  <movie-info-line category="Runtime" :info="runtime" />
+                  <movie-info-line category="Budget" :info="getFormattedMoneyAmount(movie.budget) | noInfo" />
+                  <movie-info-line category="Revenu" :info="getFormattedMoneyAmount(movie.revenue) | noInfo" />
 
-              <h2 class="title is-5 movie-hero__section-title">Crew</h2>
-              <p class="movie-hero__overview">{{ movie.overview }}</p>
+                  <h2 class="is-hidden">Featured crew</h2>
+                  <movie-info-line category="Director" :info="getCrewNamesByJob('Director')" />
+                  <movie-info-line category="Screenwriter" :info="getCrewNamesByJob('Screenplay')" />
+                  <movie-info-line category="Producer" :info="getCrewNamesByJob('Producer')" />
+                  <movie-info-line category="Cinematographer" :info="getCrewNamesByJob('Director of Photography')" />
+                  <movie-info-line category="Composer" :info="getCrewNamesByJob('Original Music Composer')" />
+                  <movie-info-line category="Production designer" :info="getCrewNamesByJob('Production Design')" />
+                </section>
+              </div>
 
               <h2 class="title is-5 movie-hero__section-title">Overview</h2>
               <p class="movie-hero__overview">{{ movie.overview }}</p>
@@ -129,6 +137,13 @@ export default Vue.extend({
       return this.movie.productionCountries
         ? this.movie.productionCountries.map((country: MovieGenre) => country.name)
         : []
+    },
+    crew (): any[] {
+      try {
+        return this.movie.credits.crew
+      } catch (e) {
+        return []
+      }
     }
   },
 
@@ -142,6 +157,12 @@ export default Vue.extend({
   methods: {
     getFormattedMoneyAmount (value: string | number) {
       return '$' + number(value, { decimals: 3, divider: ' ' })
+    },
+
+    getCrewNamesByJob (job: string): string[] {
+      return this.crew
+        .filter(item => item.job === job)
+        .map(item => item.name)
     }
   }
 })
@@ -236,21 +257,6 @@ export default Vue.extend({
 .movie-info-section {
   display: inline-flex;
   flex-direction: column;
-}
-
-.movie-info-line {
-  display: flex;
-  align-items: center;
-  padding: .45rem 0;
-  font-weight: 500;
-  color: whitesmoke;
-  border-bottom: 1px solid rgba(90, 90, 90, 0.18);
-
-  &__category {
-    width: 150px;
-    font-size: 14px;
-    font-weight: 500;
-  }
 }
 </style>
 

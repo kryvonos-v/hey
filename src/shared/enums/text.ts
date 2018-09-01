@@ -1,1 +1,1 @@
-export const NO_INFO = 'no info'
+export const NO_INFO = 'No info'
