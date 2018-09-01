@@ -7,12 +7,14 @@ import {
   searchMovie,
   getMovieGenres,
   getMovieDetails,
-  getPopularMovies
+  getPopularMovies,
+  getMoviesWithFiltering
 } from '@/services/api'
 import {
   MoviesSearchParams,
   PopularMoviesParams,
-  MovieDetailsParams
+  MovieDetailsParams,
+  MoviesSearchWithFilteringParams
 } from '@/types/api'
 import { MovieGenre } from '@/types/movie'
 import to from 'await-to-js'
@@ -39,6 +41,16 @@ const actions: ActionTree<MoviesState, RootState> = {
     root: true,
     async handler ({ commit }, params: PopularMoviesParams) {
       const [error, response] = await to(getPopularMovies(params))
+
+      if (error) throw error
+      if (response) return response.data
+    }
+  },
+
+  getMoviesWithFiltering: {
+    root: true,
+    async handler ({ commit }, params: MoviesSearchWithFilteringParams) {
+      const [error, response] = await to(getMoviesWithFiltering(params))
 
       if (error) throw error
       if (response) return response.data

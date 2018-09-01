@@ -2,7 +2,8 @@ import {
   MoviesSearchParams,
   MovieGenresResponse,
   PopularMoviesParams,
-  MovieDetailsParams
+  MovieDetailsParams,
+  MoviesSearchWithFilteringParams
 } from '@/types/api'
 import {
   MovieResults,
@@ -70,6 +71,6 @@ export function getMovieDetails (params: MovieDetailsParams): Promise<AxiosRespo
   })
 }
 
-export function getMoviesWithFiltering (params: MovieDetailsParams): Promise<AxiosResponse<MovieResults>> {
+export function getMoviesWithFiltering (params: MoviesSearchWithFilteringParams): Promise<AxiosResponse<MovieResults>> {
   return axiosMovieDB.get(endpoint.get.getMoviesWithFiltering(), { params: snakeCaseKeysWithNormalizedGteAndLte(params) })
 }

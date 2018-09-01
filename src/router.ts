@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PopularMoviesPage from '@/views/PopularMoviesPage.vue'
+import MoviesSearchPage from '@/views/MoviesSearchPage.vue'
 import MovieDetailsPage from '@/views/MovieDetailsPage/MovieDetailsPage.vue'
 
 Vue.use(VueRouter)
@@ -28,6 +29,19 @@ export default new VueRouter({
       props: route => {
         return {
           page: Number(route.query.page || 1)
+        }
+      }
+    },
+    {
+      path: '/movies-search',
+      name: 'movies-search',
+      component: MoviesSearchPage,
+      props: route => {
+        let { page, withGenres } = route.query
+
+        return {
+          page: Number(page || 1),
+          withGenres
         }
       }
     },

@@ -1,8 +1,16 @@
 <template>
   <div class="movie-simple-card">
     <router-link :to="movieLink" class="movie-simple-card__img-box">
-      <img v-if="movie.posterPath" class="movie-simple-card__img" :alt="movie.title" :src="posterImg" />
-      <span v-else class="movie-simple-card__img-fallback">{{ movie.title }}</span>
+      <img
+        v-if="movie.posterPath"
+        class="movie-simple-card__img"
+        :alt="movie.title"
+        :src="posterImg"
+      />
+      <span
+        v-else
+        class="movie-simple-card__img-fallback"
+      >{{ movie.title }}</span>
     </router-link>
     <h3 class="movie-simple-card__title title">{{ movie.title }}</h3>
     <p class="movie-simple-card__year subtitle">{{ releaseYear }}</p>

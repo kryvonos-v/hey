@@ -1,11 +1,11 @@
 <template>
   <movies-results-page
-    :results="popularMovies"
+    :results="filteredMovies"
     :page="page"
     :total-pages="totalPages"
   >
     <h1 class="title is-1 l-movies-results-header" slot="header">
-      <span class="title-underline">Popular movies</span>
+      <span class="title-underline">Movies search</span>
     </h1>
   </movies-results-page>
 </template>
@@ -25,12 +25,16 @@ export default Vue.extend({
     page: {
       type: Number,
       default: 1
+    },
+    withGenres: {
+      type: String,
+      required: false
     }
   },
 
   data () {
     return {
-      popularMovies: [],
+      filteredMovies: [],
       totalPages: Number.POSITIVE_INFINITY
     }
   },
@@ -38,18 +42,18 @@ export default Vue.extend({
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
-      this.getMoviesList({ page: this.page })
+      this.getMoviesList({ page: this.page, withGenres: this.withGenres })
     ])
   },
 
   methods: {
-    async getMoviesList (params: PopularMoviesParams) {
-      let [error, results] = await to(this.$store.dispatch('getPopularMovies', params))
+    async getMoviesList (params: any) {
+      let [error, results] = await to(this.$store.dispatch('getMoviesWithFiltering', params))
 
       if (error) return
       if (results) {
         this.totalPages = results.totalPages
-        this.popularMovies = results.results
+        this.filteredMovies = results.results
       }
     }
   }
@@ -57,15 +61,5 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.p-movies {
-  padding-bottom: 50px;
-}
 
-.l-pagination-t {
-  margin-top: 1.5rem;
-}
-
-.l-pagination-b {
-  margin-bottom: 1.5rem;
-}
 </style>

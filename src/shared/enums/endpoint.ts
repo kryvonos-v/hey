@@ -10,7 +10,7 @@ export const get = {
   // https://developers.themoviedb.org/3/movies/get-movie-details
   getMovieDetails: (movieId: number) => `/3/movie/${movieId}`,
   // https://developers.themoviedb.org/3/discover/movie-discover
-  getMoviesWithFiltering: () => `/3/discover/movie-discover`,
+  getMoviesWithFiltering: () => `/3/discover/movie`,
   // https://developers.themoviedb.org/3/movies/get-movie-recommendations
   getMovieRecommendation: (movieId: number) => `/3/movie/${movieId}/recommendations`
 }
