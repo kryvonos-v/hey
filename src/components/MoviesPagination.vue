@@ -1,7 +1,7 @@
 <template>
   <div class="pagination">
     <custom-router-link
-      :to="{ name: routeName, query: { page: previousPage } }"
+      :to="{ name: routeName, query: previousPageQuery }"
       class="pagination-previous"
       :disabled="!previousPageExist"
     >Previous page</custom-router-link>
@@ -12,7 +12,7 @@
 
     <custom-router-link
       v-if="nextPageExist"
-      :to="{ name: routeName, query: { page: nextPage } }"
+      :to="{ name: routeName, query: nextPageQuery }"
       class="pagination-next"
     >Next page</custom-router-link>
   </div>
@@ -46,6 +46,23 @@ export default Vue.extend({
     },
     nextPage (): number {
       return this.currentPage + 1
+    },
+    commonQuery (): any {
+      return this.$route.name === this.routeName
+        ? this.$route.query
+        : {}
+    },
+    previousPageQuery (): any {
+      return {
+        ...this.commonQuery,
+        page: this.previousPage
+      }
+    },
+    nextPageQuery (): any {
+      return {
+        ...this.commonQuery,
+        page: this.nextPage
+      }
     },
     previousPageExist (): boolean {
       return this.currentPage > 1
