@@ -8,19 +8,50 @@ export interface TheMovieDBBaseParams {
   language?: string,
 }
 
-export interface MovieSearchParams extends TheMovieDBBaseParams {
-  query: string,
+export interface BaseSearchParams extends TheMovieDBBaseParams {
   page?: number,
+  region?: string
+}
+
+export interface MoviesSearchParams extends BaseSearchParams {
+  query: string,
   includeAdult?: boolean,
-  region?: string,
   year?: number,
   primaryReleaseYear?: number
 }
 
-export interface PopularMoviesParams extends TheMovieDBBaseParams {
-  page?: number,
-  region?: string
+export interface MoviesSearchWithFilteringParams extends BaseSearchParams {
+  sortBy?: string,
+  certificationCountry?: string,
+  certification?: string,
+  certificationLte?: string,
+  includeAdult?: boolean,
+  includeVideo?: boolean,
+  primaryReleaseYear?: number,
+  primaryReleaseDateGte?: string,
+  primaryReleaseDateLte?: string,
+  releaseDateGte?: string,
+  releaseDateLte?: string,
+  voteCountGte?: number,
+  voteCountLte?: number,
+  voteAverageGte?: number,
+  voteAverageLte?: number,
+  withCast?: string,
+  withCrew?: string,
+  withCompanies?: string,
+  withGenres?: string,
+  withKeywords?: string,
+  withPeople?: string,
+  year?: number,
+  withoutGenres?: string,
+  withRuntimeGte?: number,
+  withRuntimeLte?: number,
+  withReleaseType?: number,
+  withOriginalLanguage?: string,
+  withoutKeywords?: string
 }
+
+export interface PopularMoviesParams extends BaseSearchParams {}
 
 export interface MovieGenresResponse extends TheMovieDBBaseParams {
   genres: MovieGenre[]

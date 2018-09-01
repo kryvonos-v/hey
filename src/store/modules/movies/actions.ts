@@ -10,7 +10,7 @@ import {
   getPopularMovies
 } from '@/services/api'
 import {
-  MovieSearchParams,
+  MoviesSearchParams,
   PopularMoviesParams,
   MovieDetailsParams
 } from '@/types/api'
@@ -64,7 +64,7 @@ const actions: ActionTree<MoviesState, RootState> = {
 
   searchMovie: {
     root: true,
-    async handler (context, params: MovieSearchParams) {
+    async handler (context, params: MoviesSearchParams) {
       const [error, response] = await to(searchMovie(params))
 
       if (error) throw error
