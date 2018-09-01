@@ -4,6 +4,19 @@ export function truncate (str: string, maxLength: number): string {
     : str
 }
 
+export function trim (str: string, char: string): string {
+  if (char === ']') char = '\\]'
+  if (char === '\\') char = '\\\\'
+
+  return str.replace(new RegExp(
+    '^[' + char + ']+|[' + char + ']+$', 'g'
+  ), '')
+}
+
+export function removeRepeatedCommas (str: string = ''): string {
+  return trim(str.replace(/,+/g, ','), ',')
+}
+
 export function number (number: number | string, { decimals = 3, divider = ' ' } = {}): string {
   let numberParts = []
   let numberAsString = number.toString()
