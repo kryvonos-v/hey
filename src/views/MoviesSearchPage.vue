@@ -5,9 +5,11 @@
     :total-pages="totalPages"
     pagination-route-name="movies-search"
   >
-    <h1 class="title is-1 l-movies-results-header" slot="header">
-      <span class="title-underline">Movies search</span>
-    </h1>
+    <div slot="header" class="l-movies-results-header">
+      <h1 class="title is-1">
+        <span class="title-underline">Movies search</span>
+      </h1>
+    </div>
   </movies-results-page>
 </template>
 
@@ -27,8 +29,8 @@ export default Vue.extend({
       type: Number,
       default: 1
     },
-    withGenres: {
-      type: String,
+    genresIds: {
+      type: Array as () => number[],
       required: false
     }
   },
@@ -43,7 +45,7 @@ export default Vue.extend({
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
-      this.getMoviesList({ page: this.page, withGenres: this.withGenres })
+      this.getMoviesList({ page: this.page, withGenres: this.genresIds.join(',') })
     ])
   },
 
@@ -62,5 +64,4 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-
 </style>
