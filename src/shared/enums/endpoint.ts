@@ -9,6 +9,8 @@ export const get = {
   getPopularMovies: () => `/3/movie/popular`,
   // https://developers.themoviedb.org/3/movies/get-movie-details
   getMovieDetails: (movieId: number) => `/3/movie/${movieId}`,
+  // https://developers.themoviedb.org/3/discover/movie-discover
+  getMoviesWithFiltering: () => `/3/discover/movie-discover`,
   // https://developers.themoviedb.org/3/movies/get-movie-recommendations
   getMovieRecommendation: (movieId: number) => `/3/movie/${movieId}/recommendations`
 }

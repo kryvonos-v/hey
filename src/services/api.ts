@@ -1,5 +1,5 @@
 import {
-  MovieSearchParams,
+  MoviesSearchParams,
   MovieGenresResponse,
   PopularMoviesParams,
   MovieDetailsParams
@@ -12,6 +12,27 @@ import {
 import * as endpoint from '@/shared/enums/endpoint'
 import axios, { AxiosResponse } from 'axios'
 import camelCaseKeys from 'camelcase-keys'
+import snakeCaseKeys from 'snakecase-keys'
+
+function snakeCaseKeysWithNormalizedGteAndLte (obj: any): any {
+  let objWithSnakeCaseKeys = snakeCaseKeys(obj)
+  let objWithNormalizedSnakeCaseKeys: any = {}
+  let normalizeKey = (key: string, suffix: string) => key.slice(0, -4) + suffix
+
+  for (let key in objWithSnakeCaseKeys) {
+    let normalizedKey = key
+
+    if (key.endsWith('_gte')) {
+      normalizedKey = normalizeKey(key, '.gte')
+    } else if (key.endsWith('_lte')) {
+      normalizedKey = normalizeKey(key, '.lte')
+    } 
+    
+    objWithNormalizedSnakeCaseKeys[normalizedKey] = objWithSnakeCaseKeys[key]
+  }
+
+  return objWithNormalizedSnakeCaseKeys
+}
 
 let axiosMovieDB = axios.create({
   baseURL: endpoint.API_URL,
@@ -25,8 +46,8 @@ let axiosMovieDB = axios.create({
   }]
 })
 
-export function searchMovie (params: MovieSearchParams): Promise<AxiosResponse<MovieResults>> {
-  return axiosMovieDB.get(endpoint.get.searchMovie(), { params: camelCaseKeys(params) })
+export function searchMovie (params: MoviesSearchParams): Promise<AxiosResponse<MovieResults>> {
+  return axiosMovieDB.get(endpoint.get.searchMovie(), { params: snakeCaseKeys(params) })
 }
 
 export function getMovieGenres (): Promise<AxiosResponse<MovieGenresResponse>> {
@@ -34,12 +55,12 @@ export function getMovieGenres (): Promise<AxiosResponse<MovieGenresResponse>> {
 }
 
 export function getPopularMovies (params: PopularMoviesParams = {}): Promise<AxiosResponse<MovieResults>> {
-  return axiosMovieDB.get(endpoint.get.getPopularMovies(), { params: camelCaseKeys(params) })
+  return axiosMovieDB.get(endpoint.get.getPopularMovies(), { params: snakeCaseKeys(params) })
 }
 
 export function getMovieDetails (params: MovieDetailsParams): Promise<AxiosResponse<MovieExtendedDetails>> {
   let { movieId, ...paramsWithoutMovieId } = params
-  paramsWithoutMovieId = camelCaseKeys(paramsWithoutMovieId)
+  paramsWithoutMovieId = snakeCaseKeys(paramsWithoutMovieId)
 
   return axiosMovieDB.get(endpoint.get.getMovieDetails(movieId), {
     params: {
@@ -47,4 +68,8 @@ export function getMovieDetails (params: MovieDetailsParams): Promise<AxiosRespo
       append_to_response: 'credits,similar'
     }
   })
+}
+
+export function getMoviesWithFiltering (params: MovieDetailsParams): Promise<AxiosResponse<MovieResults>> {
+  return axiosMovieDB.get(endpoint.get.getMoviesWithFiltering(), { params: snakeCaseKeysWithNormalizedGteAndLte(params) })
 }
