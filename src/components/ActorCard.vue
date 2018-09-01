@@ -52,15 +52,17 @@ export default Vue.extend({
     padding: 1rem;
   }
 
-  &__name {
+  &__name[class] {
     margin-top: 0.4rem;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
   }
 
   &__character {
     font-weight: 500;
-    font-size: 14px;
-    color: #b1b0b0;
+    font-size: 12px;
+    color: #8f8f8f;
   }
 }
 </style>

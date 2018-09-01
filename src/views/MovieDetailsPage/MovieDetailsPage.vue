@@ -77,6 +77,22 @@
         </div>
       </div>
     </section>
+
+    <section class="movie-recommendation section" v-if="movieRecommendationsExist">
+      <div class="container">
+        <h2 class="title is-2"><span class="title-underline">Recommendations</span></h2>
+
+        <div class="columns movie-recommendation__list is-mobile">
+          <div
+            v-for="movie in movie.similar.results"
+            :key="movie.id"
+            class="column movie-recommendation__item"
+          >
+            <movie-simple-card :movie="movie" />
+          </div>
+        </div>
+      </div>
+    </section>
   </article>
 </template>
 
@@ -96,6 +112,7 @@ import FavoriteMovieButton from '@/components/FavoriteMovieButton.vue'
 import MovieInfoLine from './MovieInfoLine.vue'
 import MovieInfoLineLink from './MovieInfoLineLink.vue'
 import ActorCard from '@/components/ActorCard.vue'
+import MovieSimpleCard from '@/components/MovieSimpleCard.vue'
 
 interface MovieDetailsPage {
   movie: MovieExtendedDetails | any,
@@ -108,7 +125,8 @@ export default Vue.extend({
     MovieRating,
     MovieInfoLine,
     MovieInfoLineLink,
-    ActorCard
+    ActorCard,
+    MovieSimpleCard
   },
 
   props: {
@@ -165,6 +183,13 @@ export default Vue.extend({
     },
     featuredCast (): any[] {
       return this.movie.credits.cast.slice(0, 20)
+    },
+    movieRecommendationsExist (): boolean {
+      return !!(
+        this.movie.similar &&
+        this.movie.similar.results &&
+        this.movie.similar.results.length
+      )
     }
   },
 
@@ -266,16 +291,23 @@ export default Vue.extend({
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #363636;
-    background-color: #0B3C49;
-    background-color: #010103;
-    background-color: #181819;
     background-color: #2D2D2D;
     opacity: 0.97;
   }
 }
 
 .movie-cast {
+  &__list {
+    overflow: auto;
+  }
+
+  &__item {
+    flex: none;
+  }
+}
+
+
+.movie-recommendation {
   &__list {
     overflow: auto;
   }
