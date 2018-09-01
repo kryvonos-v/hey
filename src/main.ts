@@ -1,8 +1,9 @@
+import './styles/main.scss'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './styles/main.scss'
+import { sync } from 'vuex-router-sync'
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem.vue'
 import clickOutside from './shared/directives/click-outside'
 import Dropdown from './components/Dropdown/Dropdown.vue'
@@ -11,12 +12,12 @@ import CustomRouterLink from './base-components/CustomRouterLink.vue'
 import registerGlobalFilters from './register-global-filters'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
 Vue.directive('click-outside', clickOutside)
 Vue.component('b-dropdown', Dropdown)
 Vue.component(DropdownItem.name, DropdownItem)
 Vue.component('custom-router-link', CustomRouterLink)
 
+sync(store, router) 
 registerGlobalFilters(Vue)
 
 Vue.config.productionTip = false
