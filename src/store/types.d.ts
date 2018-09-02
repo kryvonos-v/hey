@@ -3,8 +3,11 @@ import {
   MovieDetails
 } from '@/types/movie'
 import { Dictionary } from '@/types/common'
+import { Route } from 'vue-router'
 
-export interface RootState {}
+export interface RootState {
+  route: Route
+}
 
 export interface MoviesState {
   favoriteMoviesIds: number[],

@@ -19,10 +19,10 @@
           v-for="(genre, index) in movieGenres"
           :key="genre.id"
         >
-          <router-link
-            :to="getGenreLink(genre)"
+          <a
             class="movie-card__genre"
-          >{{ genre.name }}</router-link>
+            @click.prevent="showMoviesOfTheSameGenre(genre)"
+          >{{ genre.name }}</a>
           <span
             v-if="index !== movieGenres.length - 1"
             class="movie-card__genres-divider"
@@ -49,7 +49,7 @@ import {
   MovieDetails,
   MovieGenre
 } from '@/types/movie'
-import { truncate } from '@/shared/utils/text'
+import { truncate, removeRepeatedCommas } from '@/shared/utils/text'
 import uniqWith from 'lodash/uniqWith'
 import isEqual from 'lodash/isEqual'
 import union from 'lodash/union'
@@ -76,6 +76,9 @@ export default Vue.extend({
   computed: {
     movieGenresMap (): Dictionary<MovieGenre> {
       return this.$store.state.movies.genresMap
+    },
+    movieGenresToSearch (): number[] {
+      return this.$store.getters['movies/moviesGenresToSearch']
     },
     movieGenres (): Genre[] {
       let genres: Genre[] = []
@@ -117,19 +120,23 @@ export default Vue.extend({
       return this.movieGenresMap[genreId]
     },
 
-    getGenreLink (genre: Genre): Location {
-      let withGenres: string[] = [String(genre.id)]
+    showMoviesOfTheSameGenre (genre: Genre): void {
+      let withGenres: number[] = [...this.movieGenresToSearch]
+      let genreId = Number(genre.id)
 
-      if (this.$route.name === 'movies-search') {
-        let alreadyDefinedGenres = (this.$route.query.withGenres || '').split(',')
-        withGenres = union(withGenres, alreadyDefinedGenres)
+      if (!withGenres.includes(genreId)) {
+        withGenres.push(genreId)
       }
 
-      return {
+      this.$router.push({
         name: 'movies-search',
-        query: { withGenres: withGenres.join(',') }
-      }
+        query: { withGenres: String(withGenres) }
+      })
     }
+  },
+
+  mounted () {
+    this.movieGenresToSearch
   }
 })
 </script>

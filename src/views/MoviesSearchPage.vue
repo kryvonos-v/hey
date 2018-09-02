@@ -45,7 +45,7 @@ export default Vue.extend({
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
-      this.getMoviesList({ page: this.page, withGenres: this.genresIds.join(',') })
+      this.getMoviesList({ page: this.page, withGenres: this.genresIds.toString() })
     ])
   },
 

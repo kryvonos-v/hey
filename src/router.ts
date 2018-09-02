@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import PopularMoviesPage from '@/views/PopularMoviesPage.vue'
 import MoviesSearchPage from '@/views/MoviesSearchPage.vue'
 import MovieDetailsPage from '@/views/MovieDetailsPage/MovieDetailsPage.vue'
-import { removeRepeatedCommas } from '@/shared/utils/text'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -37,17 +37,10 @@ export default new VueRouter({
       path: '/movies-search',
       name: 'movies-search',
       component: MoviesSearchPage,
-      props: route => {
-        let genresIds = removeRepeatedCommas(route.query.withGenres)
-          .split(',')
-          .filter(Boolean)
-          .map(Number)
-
-        return {
-          page: Number(route.query.page || 1),
-          genresIds
-        }
-      }
+      props: route => ({
+        page: Number(route.query.page || 1),
+        genresIds: store.getters['movies/moviesGenresToSearch']
+      })
     },
     {
       path: '/movies/:movieId',
