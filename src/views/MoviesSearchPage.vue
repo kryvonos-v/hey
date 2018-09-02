@@ -20,15 +20,23 @@
             has-text-weight-light"
           >Selected genres: </h2>
           
-          <div
-            class="control"
-            v-for="genre in genresToSearch"
-            :key="genre.id"
-          >
-            <span class="tag is-primary is-small">
-              {{ genre.name }}
-              <button class="delete is-small" @click="removeGenreFromSearch(genre)" /> 
-            </span>
+          <template v-if="genresToSearch.length">
+            <div
+              class="control"
+              v-for="genre in genresToSearch"
+              :key="genre.id"
+            >
+              <span class="tag is-primary is-small">
+                {{ genre.name }}
+                <button
+                  class="delete is-small"
+                  @click="removeGenreFromSearch(genre)"
+                />
+              </span>
+            </div>
+          </template>
+          <div v-else class="control">
+            <span class="tag is-primary is-small">All</span>
           </div>
         </div>
       </section>
