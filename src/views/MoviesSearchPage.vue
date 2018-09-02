@@ -9,15 +9,31 @@
       <h1 class="title is-1">
         <span class="title-underline">Movies search</span>
       </h1>
+
+      <p class="title is-4">Selected genres: </p>
+      <div class="field is-grouped is-grouped-multiline">
+        <div class="control" v-for="genre in genresToSearch" :key="genre.id">
+          <span class="tag is-primary is-small">
+            {{ genre.name }}
+            <button class="delete is-small" @click="removeGenreFromSearch(genre)" /> 
+          </span>
+        </div>
+      </div>
     </div>
   </movies-results-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { MovieGenre } from '@/types/movie'
+import { mapGetters } from 'vuex'
 import to from 'await-to-js'
 import { PopularMoviesParams } from '@/types/api'
 import MoviesResultsPage from './MoviesResultsPage.vue'
+
+const {
+  getMovieGenre
+} = mapGetters('movies', ['getMovieGenre'])
 
 export default Vue.extend({
   components: {
@@ -42,6 +58,16 @@ export default Vue.extend({
     }
   },
 
+  computed: {
+    getMovieGenre,
+
+    genresToSearch (): MovieGenre[] {
+      return this.genresIds
+        .map(this.getMovieGenre)
+        .filter(Boolean) as MovieGenre[]
+    }
+  },
+
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
@@ -58,6 +84,20 @@ export default Vue.extend({
         this.totalPages = results.totalPages
         this.filteredMovies = results.results
       }
+    },
+
+    removeGenreFromSearch (genre: MovieGenre) {
+      let route = this.$route
+      let genresIds = this.genresIds.filter(id => id !== genre.id)
+
+      this.$router.push({
+        name: route.name,
+        query: {
+          ...route.query,
+          page: '1',
+          withGenres: String(genresIds)
+        }
+      })
     }
   }
 })
