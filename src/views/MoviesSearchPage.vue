@@ -10,15 +10,28 @@
         <span class="title-underline">Movies search</span>
       </h1>
 
-      <p class="title is-4">Selected genres: </p>
-      <div class="field is-grouped is-grouped-multiline">
-        <div class="control" v-for="genre in genresToSearch" :key="genre.id">
-          <span class="tag is-primary is-small">
-            {{ genre.name }}
-            <button class="delete is-small" @click="removeGenreFromSearch(genre)" /> 
-          </span>
+      <section class="filter-section">
+        <div class="
+          filter-section__inner field
+          is-grouped is-grouped-multiline"
+        >
+          <h2 class="
+            control title is-4
+            has-text-weight-light"
+          >Selected genres: </h2>
+          
+          <div
+            class="control"
+            v-for="genre in genresToSearch"
+            :key="genre.id"
+          >
+            <span class="tag is-primary is-small">
+              {{ genre.name }}
+              <button class="delete is-small" @click="removeGenreFromSearch(genre)" /> 
+            </span>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   </movies-results-page>
 </template>
@@ -104,4 +117,19 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &__inner {
+    align-items: center;
+  }
+
+  &__title[class] {
+    margin-bottom: 0.75rem;
+    margin-right: 0.75rem;
+    font-weight: 300;
+  }
+}
 </style>
