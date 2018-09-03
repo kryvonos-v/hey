@@ -11,9 +11,12 @@
         <router-link class="link" :to="moviePageLink">
           {{ movie.title }}
         </router-link>
+        <span
+          v-if="formattedReleaseYear"
+          class="movie-card__release-year"
+        >({{ formattedReleaseYear }})</span>
       </h2>
       
-      <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
       <div class="movie-card__genres">
         <a
           v-for="genre in movieGenres"
@@ -23,7 +26,6 @@
         >{{ genre.name }}</a>
       </div>
 
-      <span class="movie-card__divider"></span>
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
       
       <footer class="movie-card__footer">
@@ -95,9 +97,9 @@ export default Vue.extend({
         params: { movieId: this.movie.id }
       }
     },
-    formattedReleaseDate (): string {
-      return this.movie.releaseDate
-        ? new Date(this.movie.releaseDate).toLocaleString('en-US', localeDateOptions)
+    formattedReleaseYear (): string {
+      return typeof this.movie.releaseDate === 'string'
+        ? this.movie.releaseDate.split('-')[0]
         : ''
     },
     shortDescrtiption (): string {
@@ -201,13 +203,16 @@ export default Vue.extend({
     }
   }
 
-  &__release-date {
-    margin-bottom: 0.5rem;
-    font-size: 14px;
+  &__release-year[class] {
+    margin-left: 0.2rem;
+    display: inline-block;
+    font-size: 0.8em;
     font-weight: 500;
+    color: #959595;
   }
 
   &__genres {
+    margin-bottom: 0.5rem;
     display: inline-block;
     font-size: 14px;
     line-height: 1.35;
@@ -232,14 +237,6 @@ export default Vue.extend({
     line-height: 1.3;
     font-size: 14px;
     letter-spacing: 0.15px;
-  }
-
-  &__divider {
-    display: block;
-    margin: .6rem 0;
-    width: 25px;
-    height: 2px;
-    background-color: #808080;
   }
 
   &__footer {
@@ -268,4 +265,5 @@ export default Vue.extend({
     }
   }
 }
+
 </style>
