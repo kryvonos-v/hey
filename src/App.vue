@@ -18,36 +18,38 @@ export default Vue.extend({
 
 <style lang="scss">
 $primary: #963D5A;
-$link: #5a5a5a;
+$link: whitesmoke;
+$link-hover: #959595;
 
 @import "~bulma/sass/utilities/all";
 
 // Overriding of Bulma variables.
 $body-family: 'Poppins', sans-serif;
 $family-sans-serif: 'Arial', sans-serif;
-$title-color: whitesmoke !default;
+$title-color: whitesmoke;
+$link: whitesmoke;
 
-$section-padding: 2rem 1rem !default;
+$section-padding: 2rem 1rem;
 $fullhd: 1490px + (2 * $gap);
 
 $tag-radius: 100px;
 
-$navbar-item-hover-background-color: #4c4b4b !default;
-$navbar-item-color: whitesmoke !default;
-$navbar-dropdown-background-color: rgb(90, 90, 90) !default;
-$navbar-divider-background-color: #808080 !default;
+$navbar-item-hover-background-color: #4c4b4b;
+$navbar-item-color: whitesmoke;
+$navbar-dropdown-background-color: rgb(90, 90, 90);
+$navbar-divider-background-color: #808080;
 
 $button-border-radius: 7px;
 $pagination-disabled-color: whitesmoke;
 $pagination-disabled-background-color: #4d4d4d;
 
-$dropdown-content-background-color: rgb(90, 90, 90) !default;
-$dropdown-item-color: whitesmoke !default;
-$dropdown-item-hover-color: inherit !default;
-$dropdown-item-hover-background-color: #4c4b4b !default;
-$dropdown-content-radius: 6px !default;
-$dropdown-content-shadow: 0 8px 8px rgba(10, 10, 10, 0.1) !default;
-$dropdown-divider-background-color: #808080 !default;
+$dropdown-content-background-color: rgb(90, 90, 90);
+$dropdown-item-color: whitesmoke;
+$dropdown-item-hover-color: inherit;
+$dropdown-item-hover-background-color: #4c4b4b;
+$dropdown-content-radius: 6px;
+$dropdown-content-shadow: 0 8px 8px rgba(10, 10, 10, 0.1);
+$dropdown-divider-background-color: #808080;
 
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

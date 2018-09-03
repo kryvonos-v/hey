@@ -53,8 +53,16 @@
         class="app-search__result is-text-overflow"
         :title="`${result.title} (${getMovieReleaseYear(result)})`"
       >
-        <span class="app-search__movie-title">{{ result.title }} </span>
-        <span class="app-search__movie-year">({{ getMovieReleaseYear(result) }})</span>
+        <router-link
+          :to="{ name: 'movie-details', params: { movieId: result.id } }"
+          class="app-search__movie-title"
+        >
+          {{ result.title }}
+          <span
+            v-if="getMovieReleaseYear(result)"
+            class="app-search__movie-year"
+          >({{ getMovieReleaseYear(result) }})</span>
+        </router-link>
       </b-dropdown-item>
     </template>
   </b-dropdown>
@@ -114,7 +122,9 @@ export default Vue.extend({
     },
 
     getMovieReleaseYear (movie: MovieDetails): number {
-      return Number(movie.releaseDate.split('-')[0])
+      return movie.releaseDate
+        ? Number(movie.releaseDate.split('-')[0])
+        : NaN
     },
 
     focusSearchInput (event: MouseEvent): void {
@@ -145,11 +155,18 @@ export default Vue.extend({
   }
 
   &__movie-title {
-    font-weight: strong;
+    display: block;
+    font-weight: 500;
+    
+    &:hover {
+      color: inherit;
+    }
   }
 
   &__movie-year {
-    font-weight: normal;
+    display: inline-block;
+    margin-left: 0.25rem;
+    font-weight: 300;
   }
 
   // We use [class] to increase selector specifity.
