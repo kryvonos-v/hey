@@ -30,6 +30,8 @@ $title-color: whitesmoke !default;
 $section-padding: 2rem 1rem !default;
 $fullhd: 1490px + (2 * $gap);
 
+$tag-radius: 100px;
+
 $navbar-item-hover-background-color: #4c4b4b !default;
 $navbar-item-color: whitesmoke !default;
 $navbar-dropdown-background-color: rgb(90, 90, 90) !default;
@@ -69,6 +71,11 @@ $dropdown-divider-background-color: #808080 !default;
 
 .button {
   border-radius: $button-border-radius;
+}
+
+.tag[class] {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .link {

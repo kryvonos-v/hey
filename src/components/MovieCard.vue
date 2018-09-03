@@ -14,21 +14,14 @@
       </h2>
       
       <p class="movie-card__release-date">{{ formattedReleaseDate }}</p>
-      <p class="movie-card__genres">
-        <span
-          v-for="(genre, index) in movieGenres"
+      <div class="movie-card__genres">
+        <a
+          v-for="genre in movieGenres"
           :key="genre.id"
-        >
-          <a
-            class="movie-card__genre"
-            @click.prevent="showMoviesOfTheSameGenre(genre)"
-          >{{ genre.name }}</a>
-          <span
-            v-if="index !== movieGenres.length - 1"
-            class="movie-card__genres-divider"
-          > | </span>
-        </span>
-      </p>
+          class="tag is-dark movie-card__genre"
+          @click.prevent="showMoviesOfTheSameGenre(genre)"
+        >{{ genre.name }}</a>
+      </div>
 
       <span class="movie-card__divider"></span>
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
@@ -221,14 +214,8 @@ export default Vue.extend({
   }
 
   &__genre {
-    display: inline-block;
-    transition: all 150ms ease-in-out;
-    color: whitesmoke;
-
-    &:hover {
-      color: #d2d2d2;
-      transform: translateY(-2px);
-    }
+    margin-bottom: 0.4rem;
+    margin-right: 0.4rem;
   }
 
   &__genres-divider {
