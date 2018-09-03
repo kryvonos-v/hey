@@ -182,7 +182,11 @@ export default Vue.extend({
       }
     },
     featuredCast (): any[] {
-      return this.movie.credits.cast.slice(0, 20)
+      try {
+        return this.movie.credits.cast.slice(0, 20)
+      } catch (e) {
+        return []
+      }
     },
     movieRecommendationsExist (): boolean {
       return !!(
