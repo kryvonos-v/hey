@@ -7,7 +7,9 @@ import movies from './modules/movies'
 Vue.use(Vuex)
 
 export default new Vuex.Store<RootState>({
-  state: {},
+  state: {
+    route: undefined
+  },
   modules: {
     movies
   },

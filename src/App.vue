@@ -103,10 +103,10 @@ $dropdown-divider-background-color: #808080;
     padding-left: $button-padding-horizontal;
     padding-right: $button-padding-horizontal;
     border-radius: $button-border-radius;
-    
+
     &:hover {
       color: whitesmoke;
-      background-color: darken(#5a5a5a, 5%);  
+      background-color: darken(#5a5a5a, 5%);
     }
   }
 }

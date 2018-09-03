@@ -39,10 +39,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 
-let counter: number = -1
+let counter = -1
 
 export default Vue.extend({
   name: 'BDropdown',
@@ -76,7 +76,7 @@ export default Vue.extend({
     inline: Boolean,
     position: {
       type: String,
-      validator (value: string) {
+      validator (value) {
         return [
           'is-top-right',
           'is-top-left',
@@ -94,11 +94,12 @@ export default Vue.extend({
       selected: this.value,
       mutableActive: this.active,
       counter: ++counter,
+      /* eslint-disable no-reserved-key */
       _isDropdown: true // Used internally by DropdownItem
     }
   },
   computed: {
-    rootClasses (): any[] {
+    rootClasses () {
       return [
         this.position,
         {
@@ -110,7 +111,7 @@ export default Vue.extend({
         }
       ]
     },
-    isMobileModal (): boolean {
+    isMobileModal () {
       return this.mobileModal && !this.inline && !this.hoverable
     }
   },

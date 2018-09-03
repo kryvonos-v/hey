@@ -157,7 +157,7 @@ export default Vue.extend({
   &__movie-title {
     display: block;
     font-weight: 500;
-    
+
     &:hover {
       color: inherit;
     }
@@ -176,5 +176,3 @@ export default Vue.extend({
   }
 }
 </style>
-
-

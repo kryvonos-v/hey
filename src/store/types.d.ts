@@ -6,7 +6,7 @@ import { Dictionary } from '@/types/common'
 import { Route } from 'vue-router'
 
 export interface RootState {
-  route: Route
+  route: any
 }
 
 export interface MoviesState {

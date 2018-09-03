@@ -310,7 +310,6 @@ export default Vue.extend({
   }
 }
 
-
 .movie-recommendation {
   &__list {
     overflow: auto;
@@ -326,5 +325,3 @@ export default Vue.extend({
   flex-direction: column;
 }
 </style>
-
-

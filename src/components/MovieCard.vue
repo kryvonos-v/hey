@@ -16,7 +16,7 @@
           class="movie-card__release-year"
         >({{ formattedReleaseYear }})</span>
       </h2>
-      
+
       <div class="movie-card__genres">
         <a
           v-for="genre in movieGenres"
@@ -27,7 +27,7 @@
       </div>
 
       <p class="movie-card__description">{{ shortDescrtiption }}</p>
-      
+
       <footer class="movie-card__footer">
         <favorite-movie-button :movie-id="movie.id" />
       </footer>
@@ -128,10 +128,6 @@ export default Vue.extend({
         query: { withGenres: String(withGenres) }
       })
     }
-  },
-
-  mounted () {
-    this.movieGenresToSearch
   }
 })
 </script>
