@@ -36,7 +36,7 @@
                     <movie-info-line-link
                       v-for="genre in movie.genres"
                       :key="genre.id"
-                      to="/"
+                      :to="{ name: 'movies-search', query: { withGenres: String(genre.id) } }"
                     >{{ genre.name }}</movie-info-line-link>
                   </movie-info-line>
                   <movie-info-line category="Countries" :info="productionCountriesNames" />
@@ -259,7 +259,7 @@ export default Vue.extend({
     align-items: center;
     margin-bottom: 1.5rem;
   }
-  
+
   &__action {
     margin-left: 20px
   }
