@@ -10,7 +10,9 @@
         :route-name="paginationRouteName"
       />
 
-      <div class="columns is-multiline">
+      <div class="columns is-multiline" data-loader-target>
+        <loader-with-overlay type="cards" v-show="loading" />
+
         <div
           class="column is-12 is-half-desktop is-4-fullhd"
           v-for="movie in results"
@@ -36,12 +38,15 @@
 import Vue from 'vue'
 import MovieCard from '@/components/MovieCard.vue'
 import MoviesPagination from '@/components/MoviesPagination.vue'
+import LoaderWithOverlay from '@/base-components/LoaderWithOverlay.vue'
 import { MovieBaseDetails } from '@/types/movie'
+import { AxiosError } from 'axios'
 
 export default Vue.extend({
   components: {
     MovieCard,
-    MoviesPagination
+    MoviesPagination,
+    LoaderWithOverlay
   },
 
   props: {
@@ -60,6 +65,19 @@ export default Vue.extend({
     paginationRouteName: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Object as () => AxiosError
+    }
+  },
+
+  watch: {
+    results (newResults) {
+      console.log(newResults)
     }
   }
 })

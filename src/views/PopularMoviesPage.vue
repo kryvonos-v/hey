@@ -3,6 +3,8 @@
     :results="popularMovies"
     :page="page"
     :total-pages="totalPages"
+    :loading="loading"
+    :error="error"
     pagination-route-name="movies-list"
   >
     <h1 class="title is-1 l-movies-results-header" slot="header">
@@ -31,8 +33,16 @@ export default Vue.extend({
 
   data () {
     return {
+      error: null,
+      loading: false,
       popularMovies: [],
       totalPages: Number.POSITIVE_INFINITY
+    }
+  },
+
+  watch: {
+    page (newPage) {
+      this.getMoviesList({ page: newPage })
     }
   },
 
@@ -45,9 +55,11 @@ export default Vue.extend({
 
   methods: {
     async getMoviesList (params: PopularMoviesParams) {
+      this.loading = true
       let [error, results] = await to(this.$store.dispatch('getPopularMovies', params))
+      this.loading = false
+      this.error = error
 
-      if (error) return
       if (results) {
         this.totalPages = results.totalPages
         this.popularMovies = results.results
