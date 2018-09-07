@@ -10,7 +10,7 @@
         :route-name="paginationRouteName"
       />
 
-      <div class="columns is-multiline" data-loader-target>
+      <div class="columns is-multiline p-movies-results__results" data-loader-target>
         <loader-with-overlay type="cards" v-show="loading" />
 
         <div
@@ -73,12 +73,6 @@ export default Vue.extend({
     error: {
       type: Object as () => AxiosError
     }
-  },
-
-  watch: {
-    results (newResults) {
-      console.log(newResults)
-    }
   }
 })
 </script>
@@ -86,6 +80,10 @@ export default Vue.extend({
 <style lang="scss">
 .p-movies-results {
   padding-bottom: 50px;
+
+  &__results {
+    min-height: 450px;
+  }
 }
 
 .l-pagination-t {

@@ -42,21 +42,24 @@ export default Vue.extend({
 
   watch: {
     page (newPage) {
-      this.getMoviesList({ page: newPage })
+      this.getMoviesListForCurrentPage()
     }
   },
 
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
-      this.getMoviesList({ page: this.page })
+      this.getMoviesListForCurrentPage()
     ])
   },
 
   methods: {
+    async getMoviesListForCurrentPage () {
+      return this.getMoviesList({ page: this.page })
+    },
     async getMoviesList (params: PopularMoviesParams) {
       this.loading = true
-      let [error, results] = await to(this.$store.dispatch('getPopularMovies', params))
+      let [error, results] = await to(this.$store.dispatch('getPopularMovies', { page: this.page }))
       this.loading = false
       this.error = error
 

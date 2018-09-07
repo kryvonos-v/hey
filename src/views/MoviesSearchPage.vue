@@ -3,6 +3,8 @@
     :results="filteredMovies"
     :page="page"
     :total-pages="totalPages"
+    :loading="loading"
+    :error="error"
     pagination-route-name="movies-search"
   >
     <div slot="header" class="l-movies-results-header">
@@ -47,9 +49,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MovieGenre } from '@/types/movie'
+import { AxiosError } from 'axios'
 import { mapGetters } from 'vuex'
 import to from 'await-to-js'
-import { PopularMoviesParams } from '@/types/api'
+import { MoviesSearchWithFilteringParams } from '@/types/api'
 import MoviesResultsPage from './MoviesResultsPage.vue'
 
 const {
@@ -74,6 +77,8 @@ export default Vue.extend({
 
   data () {
     return {
+      loading: false,
+      error: null,
       filteredMovies: [],
       totalPages: Number.POSITIVE_INFINITY
     }
@@ -89,18 +94,35 @@ export default Vue.extend({
     }
   },
 
+  watch: {
+    page () {
+      this.getMoviesListForCurrentPageAndFilters()
+    },
+    genresIds () {
+      this.getMoviesListForCurrentPageAndFilters()
+    }
+  },
+
   async created () {
     await Promise.all([
       this.$store.dispatch('getMovieGenres'),
-      this.getMoviesList({ page: this.page, withGenres: this.genresIds.toString() })
+      this.getMoviesListForCurrentPageAndFilters()
     ])
   },
 
   methods: {
-    async getMoviesList (params: any) {
+    async getMoviesListForCurrentPageAndFilters () {
+      return this.getMoviesList({
+        page: this.page,
+        withGenres: this.genresIds.toString()
+      })
+    },
+    async getMoviesList (params: MoviesSearchWithFilteringParams) {
+      this.loading = true
       let [error, results] = await to(this.$store.dispatch('getMoviesWithFiltering', params))
+      this.loading = false
+      this.error = error
 
-      if (error) return
       if (results) {
         this.totalPages = results.totalPages
         this.filteredMovies = results.results
